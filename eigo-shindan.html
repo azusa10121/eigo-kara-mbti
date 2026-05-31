@@ -422,6 +422,73 @@
       color: var(--mid);
       white-space: pre-line;
     }
+    .step-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(6,130,160,.18);
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+    .step-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+    .pitfall-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pitfall-item {
+      position: relative;
+      padding: 10px 12px 10px 34px;
+      border: 1px solid #fed7d7;
+      border-radius: 10px;
+      background: #fff7f7;
+      color: #8a2c2c;
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+    .pitfall-item::before {
+      content: '!';
+      position: absolute;
+      left: 12px;
+      top: 11px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #f56565;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
 
     /* tags (strengths/weaknesses) */
     .tag-list {
@@ -686,7 +753,7 @@
   <p class="lead">
     頑張っているのに話せない——<br>
     その理由は4つのタイプに分かれています。<br>
-    12問で、あなたの「英語の壁」を診断します。
+    15問で、あなたの「英語の壁」を診断します。
   </p>
 
   <!-- character preview -->
@@ -710,7 +777,7 @@
   </div>
 
   <div class="info-row">
-    <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="1" width="18" height="20" rx="5" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="6" y1="8" x2="16" y2="8" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="12" x2="16" y2="12" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="16" x2="12" y2="16" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="#0ba298"/><path d="M15,15.5 L15.8,16.5 L17.5,14.5" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> 全12問</span>
+    <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="1" width="18" height="20" rx="5" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="6" y1="8" x2="16" y2="8" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="12" x2="16" y2="12" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="16" x2="12" y2="16" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="#0ba298"/><path d="M15,15.5 L15.8,16.5 L17.5,14.5" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> 全15問</span>
     <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="12" r="9" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="11" y1="5" x2="11" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="2" x2="14" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="11" y1="12" x2="11" y2="8" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="12" x2="14.5" y2="12" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="12" r="1.5" fill="#0ba298"/></svg> 約3分</span>
     <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="9" width="20" height="12" rx="3" fill="#edfafa" stroke="#5cc8cf" stroke-width="1.8"/><rect x="1" y="6" width="20" height="4" rx="2" fill="#5cc8cf" opacity=".6" stroke="#5cc8cf" stroke-width="1.5"/><line x1="11" y1="6" x2="11" y2="21" stroke="white" stroke-width="1.8"/><path d="M11,6 C11,4 9,2 7,3 C5,4 6,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/><path d="M11,6 C11,4 13,2 15,3 C17,4 16,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/></svg> 完全無料</span>
   </div>
@@ -721,7 +788,7 @@
 <div class="card card-accent" id="s-quiz">
   <div class="progress-area">
     <div class="progress-top">
-      <span class="progress-qnum" id="prog-qnum">Q1 / 12</span>
+      <span class="progress-qnum" id="prog-qnum"></span>
       <span class="progress-pct" id="prog-pct">0%</span>
     </div>
     <div class="progress-track">
@@ -776,6 +843,24 @@
       <span class="detail-title">話せない本当の理由</span>
     </div>
     <p class="detail-body" id="res-reason"></p>
+  </div>
+
+  <!-- PRESCRIPTION STEPS -->
+  <div class="detail-sec">
+    <div class="detail-head">
+      <div class="detail-icon"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#edfafa"/><path d="M7 15.5 L12 20 L22 8" fill="none" stroke="#0ba298" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="8" r="2" fill="#f2a246"/><circle cx="20" cy="20" r="2" fill="#f48fb9"/></svg></div>
+      <span class="detail-title">今日からの処方箋</span>
+    </div>
+    <div id="res-steps"></div>
+  </div>
+
+  <!-- PITFALLS -->
+  <div class="detail-sec">
+    <div class="detail-head">
+      <div class="detail-icon"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#fff5f5"/><path d="M14 6 L23 22 H5 Z" fill="#fed7d7" stroke="#f56565" stroke-width="2" stroke-linejoin="round"/><line x1="14" y1="11" x2="14" y2="16" stroke="#c53030" stroke-width="2.4" stroke-linecap="round"/><circle cx="14" cy="19" r="1.4" fill="#c53030"/></svg></div>
+      <span class="detail-title">避けたいNGパターン</span>
+    </div>
+    <ul class="pitfall-list" id="res-pitfalls"></ul>
   </div>
 
   <div class="divider"></div>
@@ -859,6 +944,16 @@ const TYPES = {
     memo: `やる気があるのに話せないのは、あなたのせいじゃありません。英語の「型」がまだ体に入っていないだけです。
 
 その熱量は本物。あとは正しい方向に向けるだけで、一気に話せるようになります。個別相談では、あなたの熱量を無駄にしない最短ルートを一緒に設計します。`,
+    steps: [
+      { num: 1, title: 'まず「型」を3つ覚える', body: '「I want to〜」「I think〜」「Can you〜？」この3パターンだけで会話の6割はカバーできます。単語より先に型を体に入れましょう。' },
+      { num: 2, title: '実際に使う場に飛び込む', body: '完璧じゃなくていい。HelloTalkやSpeakなどのアプリで、今日覚えた型を1回使うだけでOK。使ってみることが型を定着させる唯一の方法です。' },
+      { num: 3, title: '「熱量のムラ」を記録する', body: '「なぜ続かないか」ではなく「いつ熱量が上がるか」を日記に書きましょう。ライオン型は外部刺激で一気に伸びるので、自分の熱量パターンを知ることが最大の武器になります。' },
+    ],
+    pitfalls: [
+      '基礎が固まる前にスピーキングだけ練習しようとする',
+      'やる気に任せて詰め込みすぎて燃え尽きる',
+      '「話せた！」感覚だけ追いかけて復習をしない',
+    ],
     promises: [
       'あなたの英語の"型の抜け漏れ"を4領域で正確に診断する',
       '熱量を無駄にしない、最短で型を身につける学習ロードマップを提示',
@@ -894,6 +989,16 @@ const TYPES = {
     memo: `これだけ勉強してきたのに話せないのは、知識が足りないからじゃありません。「頭の中の英語を口につなぐ」練習が、まだできていないだけです。
 
 知識はもう十分あります。あとは橋渡しの一歩だけ。個別相談で、その具体的な方法を一緒に見つけましょう。`,
+    steps: [
+      { num: 1, title: '1日1文だけ声に出す', body: '知っている文法を使った文を1つ、声に出してください。録音して聞き返す必要もありません。「口に出した」という事実だけが大切です。' },
+      { num: 2, title: 'シャドーイングを5分だけ', body: 'NHK Worldの簡単なニュースや、YouTubeの英語学習動画を流しながら、そのまま口で追う練習。知識を「体の動き」に変換する最短ルートです。' },
+      { num: 3, title: '「準備が終わったら」を禁止する', body: '「もう少し準備したら話す」は永遠に終わりません。今日から「7割の準備で話す」ルールにしてください。残り3割は話しながら学べます。' },
+    ],
+    pitfalls: [
+      '「もっと勉強してから話す」を繰り返して永遠にアウトプットしない',
+      '正確さにこだわりすぎて遅くて伝わらない英語になる',
+      '独学インプットが増え続けて練習相手が見つからないまま終わる',
+    ],
     promises: [
       '今の知識を"話せる英語"に変える具体的なアウトプット練習法を教える',
       '一人でも続けられる安全な実践環境の作り方を提案する',
@@ -929,6 +1034,16 @@ const TYPES = {
     memo: `「間違えたらどうしよう」という気持ち、すごくよくわかります。でも実は、このタイプが一番英語の感性を持っています。怖いと感じるのは、それだけ英語を真剣に考えている証拠です。
 
 安心できる場所さえあれば、あなたは必ず話せるようになります。個別相談では、まず「怖くない」という体験を一緒に作るところから始めます。`,
+    steps: [
+      { num: 1, title: '「間違い歓迎」の環境を1つ作る', body: 'ChatGPTなどのAIに英語でメッセージを送ってみましょう。機械相手なら恥ずかしくない。正しくなくていい、「送った」という体験が自信の第一歩です。' },
+      { num: 2, title: '「伝わった体験」を週1回積む', body: 'カフェで "One coffee, please." だけでもOK。短い英語を1文、実際に使ってみましょう。' },
+      { num: 3, title: 'ミスした自分を「録音」する', body: '声に出した英語を録音して聞いてみる。「あ、意外とちゃんと言えてる」という気づきが、さくら型の最大のブレーキを外します。' },
+    ],
+    pitfalls: [
+      '間違えへの恐怖から英語を使う場面を完全に避ける',
+      '「ネイティブみたいに話せなきゃ」という基準を持ち続ける',
+      '一度失敗するとモチベーションが大きく落ちて長期休止する',
+    ],
     promises: [
       '「怖い」と感じる根本原因を一緒に特定して、具体的に取り除く方法を考える',
       '間違えても大丈夫な、安心・安全な練習の場を提供する',
@@ -964,6 +1079,16 @@ const TYPES = {
     memo: `何度も挑戦してきたこと、それだけで十分すごいと思います。続かなかったのは意志が弱いからじゃない。続く「仕組み」がなかっただけです。
 
 バタフライ型の人は、正しい仕組みさえあれば一気に変わります。個別相談で、あなたに合った「続く設計」を一緒に作りましょう。`,
+    steps: [
+      { num: 1, title: '学習ツールを1つだけに絞る', body: '今から3ヶ月は、教材・アプリを1つだけに絞る。「もっといい方法があるかも」という思考が継続を邪魔している最大の原因です。' },
+      { num: 2, title: '「1分でもやったら勝ち」ルール', body: '毎日の学習目標を「1分」に設定する。最低ラインを1分にすることで、「今日もできた」が積み重なり始めます。' },
+      { num: 3, title: '進捗を外に見せる', body: 'SNSやLINEで「今日もやった」を報告できる相手を作る。バタフライ型は外部の目と承認が継続の仕組みになります。' },
+    ],
+    pitfalls: [
+      '新しい教材・アプリを見つけるたびに乗り換えてどれも中途半端になる',
+      'モチベーションが高いときに大量、低いときに完全ゼロになる',
+      '一人で続けようとして続かないと「自分はダメだ」と感じてしまう',
+    ],
     promises: [
       '「続かない理由」を仕組みの観点で具体的に特定する',
       '意志力に頼らず毎日続く、1日5分の学習設計をする',
@@ -979,7 +1104,7 @@ const TYPES = {
 };
 
 // ─────────────────────────
-//  12 QUESTIONS
+//  15 QUESTIONS
 // ─────────────────────────
 const QS = [
   {
@@ -1038,6 +1163,17 @@ const QS = [
     ],
   },
   {
+    cat: '🔁 挑戦回数',
+    text: '英語学習に「本気で取り組もう」と決意したのは、これで何度目ですか？',
+    scene: '正直に選んでください。',
+    opts: [
+      { label: '初めて、または初めてに近い（1〜2回）', s: { lion: 3 } },
+      { label: '3〜5回は決意してきた', s: { butterfly: 3, lion: 1 } },
+      { label: '何度かわからないくらい繰り返している', s: { butterfly: 4 } },
+      { label: '決意というより、ずっとなんとなく気になっている', s: { owl: 2, sakura: 2 } },
+    ],
+  },
+  {
     cat: '🔄 継続パターン',
     text: '英語学習の継続について、あなたに一番近いのは？',
     scene: '',
@@ -1071,6 +1207,17 @@ const QS = [
     ],
   },
   {
+    cat: '📖 インプット量',
+    text: '英語の勉強量について、正直なところ教えてください',
+    scene: '',
+    opts: [
+      { label: '文法書・参考書・動画など、かなりの量をこなしてきた', s: { owl: 4 } },
+      { label: '教材は買ったが、あまり進んでいない', s: { butterfly: 2, sakura: 2 } },
+      { label: '勉強したいけど、なかなか手がつかない状態が続いている', s: { sakura: 3, butterfly: 1 } },
+      { label: '動画やアプリなど試してきたが、どれも中途半端になっている', s: { butterfly: 3 } },
+    ],
+  },
+  {
     cat: '💭 ミスへの反応',
     text: '英語で話していて、間違いを指摘されたら？',
     scene: '',
@@ -1086,10 +1233,10 @@ const QS = [
     text: '「英語ができた！」と感じる場面で、一番うれしいのはどれですか？',
     scene: '',
     opts: [
-      { label: '外国人との会話で、思ったより伝わったと実感できたとき', s: { lion: 2 } },
-      { label: '英語の映画や本が、辞書なしでスムーズに理解できるようになったとき', s: { owl: 2 } },
-      { label: 'ネイティブに「上手！」と言ってもらえたとき', s: { sakura: 2 } },
-      { label: '「以前の自分と違う」と、ちゃんと続けられた自分を実感したとき', s: { butterfly: 2 } },
+      { label: '外国人との会話で、思ったより伝わったと実感できたとき', s: { lion: 3 } },
+      { label: '英語の映画や本が、辞書なしでスムーズに理解できるようになったとき', s: { owl: 3 } },
+      { label: 'ネイティブに「上手！」と言ってもらえたとき', s: { sakura: 3 } },
+      { label: '「以前の自分と違う」と、ちゃんと続けられた自分を実感したとき', s: { butterfly: 3 } },
     ],
   },
   {
@@ -1097,10 +1244,21 @@ const QS = [
     text: '英語が話せるようになったら、一番したいことは何ですか？',
     scene: '',
     opts: [
-      { label: '世界を旅して、現地の人と気軽に話したい', s: { lion: 2 } },
-      { label: '英語で深い話や専門的な会話ができるようになりたい', s: { owl: 2 } },
-      { label: '自分の気持ちや考えを、英語でちゃんと伝えられるようになりたい', s: { sakura: 2 } },
-      { label: 'まず「日常会話で困らない自分」になりたい', s: { butterfly: 2 } },
+      { label: '世界を旅して、現地の人と気軽に話したい', s: { lion: 3, butterfly: 1 } },
+      { label: '英語で深い話や専門的な会話ができるようになりたい', s: { owl: 4 } },
+      { label: '自分の気持ちや考えを、英語でちゃんと伝えられるようになりたい', s: { sakura: 3, owl: 1 } },
+      { label: 'まず「日常会話で困らない自分」になりたい', s: { butterfly: 2, sakura: 1 } },
+    ],
+  },
+  {
+    cat: '💬 話せない感情',
+    text: '英語が話せないとき、自分の中で一番強く感じる感情はどれですか？',
+    scene: '',
+    opts: [
+      { label: '悔しさ・もどかしさ（言いたいことはあるのに！）', s: { lion: 3 } },
+      { label: '不思議さ・知的な焦り（なぜ頭にあるのに出ないんだろう）', s: { owl: 3 } },
+      { label: '恥ずかしさ・怖さ（また失敗するかも）', s: { sakura: 4 } },
+      { label: 'あきらめ感・虚しさ（また続かなかった）', s: { butterfly: 3 } },
     ],
   },
   {
@@ -1122,6 +1280,7 @@ const QS = [
 let cur         = 0;
 let answers     = Array(QS.length).fill(null);
 let ctaObserver = null;
+let diagnosisResult = null;
 
 // ─────────────────────────
 //  FUNCTIONS
@@ -1189,17 +1348,32 @@ function prevQ() {
 }
 
 function calcResult() {
-  const sc = { lion:0, owl:0, sakura:0, butterfly:0 };
+  const scores = { lion:0, owl:0, sakura:0, butterfly:0 };
   answers.forEach((ans, qi) => {
     if (ans === null) return;
     const s = QS[qi].opts[ans].s;
-    Object.keys(s).forEach(k => { sc[k] += s[k]; });
+    Object.keys(s).forEach(k => { scores[k] += s[k]; });
   });
-  const winner = Object.keys(sc).reduce((a,b) => sc[a] >= sc[b] ? a : b);
-  showResult(winner, sc);
+
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const topType = sorted[0][0];
+  const secondType = sorted[1][0];
+  const scoreDiff = sorted[0][1] - sorted[1][1];
+
+  window._subType = scoreDiff <= 5 ? secondType : null;
+  window._scoreDiff = scoreDiff;
+
+  const result = {
+    type: topType,
+    scores,
+    scoreDiff,
+  };
+  if (window._subType) result.subType = window._subType;
+  diagnosisResult = result;
+  showResult(result.type, result.scores, result);
 }
 
-function showResult(typeId, sc) {
+function showResult(typeId, sc, result = null) {
   const t = TYPES[typeId];
 
   // badge
@@ -1245,6 +1419,19 @@ function showResult(typeId, sc) {
   // text sections
   document.getElementById('res-reason').textContent   = t.reason;
   document.getElementById('res-memo').textContent     = t.memo;
+
+  // result page deepening sections
+  document.getElementById('res-steps').innerHTML =
+    t.steps.map(step => `
+      <div class="step-item">
+        <div class="step-num">${step.num}</div>
+        <div>
+          <div class="step-title">${step.title}</div>
+          <div class="step-body">${step.body}</div>
+        </div>
+      </div>`).join('');
+  document.getElementById('res-pitfalls').innerHTML =
+    t.pitfalls.map(p => `<li class="pitfall-item">${p}</li>`).join('');
 
   // promises
   document.getElementById('res-promises').innerHTML =
