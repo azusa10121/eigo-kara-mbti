@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>英語タイプ診断｜Azusa English</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:     #0682a0;
+      --teal-d:   #055f80;
+      --teal-m:   #38b6d0;
+      --teal-l:   #a0d8ea;
+      --teal-xl:  #ddf0f7;
+      --teal-xxl: #f0f8fc;
+      --coral:    #ff6b6b;
+      --coral-d:  #e85a4f;
+      --coral-l:  #ffa8a0;
+      --white:    #ffffff;
+      --off:      #f8fffe;
+      --dark:     #0f2524;
+      --mid:      #2d4a48;
+      --gray:     #6b8a88;
+      --gray-l:   #a8c5c3;
+      --border:   #cde9e7;
+      --shadow:   0 4px 32px rgba(6,130,160,.10);
+      --shadow-s: 0 2px 12px rgba(6,130,160,.12);
+      --r:        20px;
+      --r-s:      12px;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #fdf8f3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 80px;
+      color: var(--dark);
+    }
+
+    /* ─── LOGO / HEADER ─── */
+    .site-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+    .site-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .site-tagline {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: .08em;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--white);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 580px;
+      padding: 40px 36px;
+      border: 1px solid var(--border);
+    }
+    .card-accent {
+      position: relative;
+      overflow: hidden;
+    }
+    .card-accent::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-m), #a8e8e5);
+    }
+
+    /* ─── START SCREEN ─── */
+    #s-start { text-align: center; }
+    #s-start .hero-emoji {
+      display: block;
+      width: 80px; height: 80px;
+      margin: 0 auto 16px;
+      filter: drop-shadow(0 4px 12px rgba(6,130,160,.2));
+    }
+    #s-start .hero-emoji svg { width: 80px; height: 80px; }
+    #s-start h1 {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+    #s-start h1 span {
+      color: var(--teal);
+    }
+    #s-start .lead {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    /* character preview */
+    .char-preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .char-mini {
+      background: var(--teal-xxl);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 10px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .char-mini .icon { display: block; width: 36px; height: 36px; }
+    .char-mini .icon svg { width: 36px; height: 36px; }
+    .char-mini .name {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--teal-d);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .info-pill {
+      background: #e8f5f4;
+      color: var(--teal-d);
+      border: 1px solid var(--teal-l);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      padding: 14px 26px;
+      border-radius: var(--r-s);
+      border: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .22s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(255,107,107,.38), 0 2px 6px rgba(244,143,185,.25);
+      width: 100%;
+      font-size: 16px;
+      padding: 16px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .btn-primary:hover    { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-1px); box-shadow: 0 8px 26px rgba(255,107,107,.45), 0 3px 8px rgba(244,143,185,.3); }
+    .btn-primary:disabled { opacity: .38; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost {
+      background: #f5f5f0;
+      color: var(--gray);
+      border: 1.5px solid var(--border);
+      padding: 14px 18px;
+    }
+    .btn-ghost:hover { background: #e8f0ef; color: var(--teal-d); }
+
+    /* ─── QUIZ SCREEN ─── */
+    #s-quiz { display: none; }
+
+    .progress-area { margin-bottom: 28px; }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .progress-qnum {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: .06em;
+    }
+    .progress-pct {
+      font-size: 11px;
+      color: var(--gray);
+    }
+    .progress-track {
+      height: 5px;
+      background: var(--teal-xl);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--teal-m));
+      border-radius: 99px;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    .q-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal-d);
+      background: var(--teal-xl);
+      border: 1px solid var(--teal-l);
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+    .q-text {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.65;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+    .q-scene {
+      font-size: 12.5px;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+    .opt-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-s);
+      background: var(--white);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--mid);
+      line-height: 1.55;
+      text-align: left;
+      transition: all .18s ease;
+    }
+    .opt-btn:hover { border-color: var(--teal); background: var(--teal-xxl); }
+    .opt-btn.sel   { border-color: var(--teal); background: var(--teal-xl); color: var(--teal-d); }
+    .opt-letter {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--teal-xxl);
+      border: 1.5px solid var(--teal-l);
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all .18s;
+    }
+    .opt-btn.sel .opt-letter {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white;
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .nav-row .btn-primary { flex: 1; font-size: 15px; padding: 14px; }
+
+    /* ─── RESULT SCREEN ─── */
+    #s-result { display: none; }
+
+    /* hero */
+    .result-hero {
+      text-align: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .result-type-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 99px;
+      margin-bottom: 18px;
+    }
+    .result-char-icon {
+      display: block;
+      width: 88px; height: 88px;
+      margin: 0 auto 8px;
+      filter: drop-shadow(0 6px 16px rgba(6,130,160,.18));
+    }
+    .result-char-icon svg { width: 88px; height: 88px; }
+    .result-type-en {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .15em;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .result-type-ja {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .result-type-desc {
+      font-size: 13.5px;
+      color: var(--gray);
+      line-height: 1.8;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* personality bars */
+    .personality-section {
+      background: var(--teal-xxl);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+    .personality-section h3 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    .trait-row { margin-bottom: 12px; }
+    .trait-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 5px;
+    }
+    .trait-labels strong { color: var(--dark); font-weight: 700; }
+    .trait-track {
+      height: 6px;
+      background: var(--teal-xl);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .trait-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--teal-m));
+      border-radius: 99px;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* detail sections */
+    .detail-sec {
+      margin-bottom: 20px;
+    }
+    .detail-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .detail-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: var(--teal-xl);
+      flex-shrink: 0;
+    }
+    .detail-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--mid);
+    }
+    .detail-body {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--mid);
+      white-space: pre-line;
+    }
+
+    /* tags (strengths/weaknesses) */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+    .tag-good { background: var(--teal-xl); color: var(--teal-d); border: 1px solid var(--teal-l); }
+    .tag-bad  { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+
+    /* azusa memo */
+    .azusa-memo {
+      background: linear-gradient(135deg, var(--teal-xxl), #f0fffe);
+      border: 1.5px solid var(--teal-l);
+      border-left: 4px solid var(--teal);
+      border-radius: var(--r-s);
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+    .azusa-memo-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .azusa-memo p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--mid);
+      white-space: pre-line;
+    }
+
+    /* checklist */
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--mid);
+    }
+    .check-list li::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      background: var(--teal);
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* VIDEO */
+    .video-wrap {
+      border-radius: var(--r-s);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .video-header {
+      background: var(--teal);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 16px;
+      letter-spacing: .05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .video-body {
+      position: relative;
+      padding-bottom: 56.25%;
+      background: var(--dark);
+    }
+    .video-body iframe,
+    .video-body video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #0f2524, #0a3d3a);
+    }
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(6,130,160,.35);
+      border: 2px solid rgba(91,200,194,.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: white;
+    }
+    .video-placeholder span {
+      font-size: 13px;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-card {
+      background: #fff8f3;
+      border: 2px solid #f8c4a0;
+      border-radius: var(--r);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+    .cta-headline {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .cta-headline span { color: var(--teal); }
+    .cta-body {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 17px 24px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
+      color: white;
+      border-radius: var(--r-s);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 6px 22px rgba(255,107,107,.38), 0 2px 8px rgba(244,143,185,.28);
+      transition: all .22s;
+      letter-spacing: .02em;
+    }
+    .cta-btn:hover { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,107,.48), 0 4px 10px rgba(244,143,185,.32); }
+    .cta-footnote {
+      font-size: 11.5px;
+      color: var(--gray-l);
+      margin-top: 12px;
+      line-height: 1.65;
+    }
+
+    /* divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    .retry-row { text-align: center; margin-top: 20px; }
+    .btn-retry {
+      background: none; border: none;
+      font-family: inherit;
+      font-size: 12px;
+      color: var(--gray);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .btn-retry:hover { color: var(--teal); }
+
+    /* anim */
+    .fade-up { animation: fu .42s cubic-bezier(.4,0,.2,1) both; }
+    @keyframes fu { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ─── FLOATING CTA ─── */
+    #floating-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 12px 16px 20px;
+      background: linear-gradient(to top, #fdf8f3 70%, transparent);
+      display: none;
+      justify-content: center;
+    }
+    .floating-cta-link {
+      display: block;
+      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
+      color: white;
+      text-decoration: none;
+      padding: 16px 24px;
+      border-radius: var(--r-s);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 15px;
+      width: 100%;
+      max-width: 548px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(255,107,107,.42);
+      transition: all .22s ease;
+    }
+    .floating-cta-link:hover { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-1px); }
+
+    @media (max-width: 480px) {
+      .card         { padding: 28px 18px; }
+      .q-text       { font-size: 16px; }
+      .result-type-ja { font-size: 20px; }
+      .char-preview { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+      .char-mini .icon { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo">Azusa English</div>
+  <div class="site-tagline">英語タイプ診断 ✦ 無料</div>
+</header>
+
+<!-- ══════════ START ══════════ -->
+<div class="card card-accent fade-up" id="s-start">
+  <span class="hero-emoji"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="#fff9f0"/><rect x="14" y="20" width="52" height="50" rx="10" fill="white" stroke="#f2a246" stroke-width="2.5"/><rect x="30" y="13" width="20" height="12" rx="6" fill="#f2a246"/><rect x="32" y="14" width="16" height="9" rx="4.5" fill="white" opacity=".7"/><circle cx="27" cy="40" r="7.5" fill="#f2a246"/><circle cx="53" cy="40" r="7.5" fill="#4688df"/><circle cx="27" cy="58" r="7.5" fill="#f48fb9"/><circle cx="53" cy="58" r="7.5" fill="#5cc8cf"/></svg></span>
+  <h1>あなたはどの<br><span>英語学習タイプ</span>？</h1>
+  <p class="lead">
+    頑張っているのに話せない——<br>
+    その理由は4つのタイプに分かれています。<br>
+    12問で、あなたの「英語の壁」を診断します。
+  </p>
+
+  <!-- character preview -->
+  <div class="char-preview">
+    <div class="char-mini">
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff4e4"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f2a246"/><path d="M46,91 L60,103 L74,91" fill="#c87820"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#c87820"/><polygon points="70,87 63,91 70,95" fill="#c87820"/><circle cx="60" cy="91" r="3.2" fill="#e8960a"/><circle cx="60" cy="50" r="32" fill="#e8920a"/><polygon points="60,10 55,26 65,26" fill="#e8920a"/><polygon points="47,13 44,28 55,24" fill="#e8920a"/><polygon points="73,13 76,28 65,24" fill="#e8920a"/><polygon points="35,22 36,37 47,28" fill="#e8920a"/><polygon points="85,22 84,37 73,28" fill="#e8920a"/><circle cx="31" cy="54" r="8" fill="#fce8d4"/><circle cx="89" cy="54" r="8" fill="#fce8d4"/><circle cx="31" cy="54" r="5" fill="#f8c4a0"/><circle cx="89" cy="54" r="5" fill="#f8c4a0"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><path d="M49,54 Q53,50 57,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M63,54 Q67,50 71,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#4a2c10"/><circle cx="67" cy="62" r="5.5" fill="#4a2c10"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M49,76 Q60,86 71,76" stroke="#c87820" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="name">行動<br>ライオン型</span>
+    </div>
+    <div class="char-mini">
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#eff4ff"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#4688df"/><path d="M46,91 L60,103 L74,91" fill="#1c3870"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#1c3870"/><polygon points="70,87 63,91 70,95" fill="#1c3870"/><circle cx="60" cy="91" r="3.2" fill="#4688df"/><ellipse cx="60" cy="43" rx="30" ry="22" fill="#2a3f6e"/><ellipse cx="32" cy="57" rx="10" ry="14" fill="#2a3f6e"/><ellipse cx="88" cy="57" rx="10" ry="14" fill="#2a3f6e"/><polygon points="45,28 41,11 54,26" fill="#2a3f6e"/><polygon points="75,28 79,11 66,26" fill="#2a3f6e"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><ellipse cx="76" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><path d="M44,52 Q48,48 52,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M68,52 Q72,48 76,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><circle cx="70" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><line x1="61.5" y1="63" x2="58.5" y2="63" stroke="#4688df" stroke-width="2.5"/><line x1="23" y1="60" x2="38.5" y2="61" stroke="#4688df" stroke-width="2.2"/><line x1="81.5" y1="61" x2="97" y2="60" stroke="#4688df" stroke-width="2.2"/><circle cx="50" cy="63" r="4.5" fill="#2a3040"/><circle cx="70" cy="63" r="4.5" fill="#2a3040"/><circle cx="52" cy="61" r="2" fill="white"/><circle cx="72" cy="61" r="2" fill="white"/><circle cx="60" cy="71" r="1.8" fill="#d4987a"/><path d="M52,78 Q60,84 68,78" stroke="#a07850" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="name">探求<br>フクロウ型</span>
+    </div>
+    <div class="char-mini">
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff0f6"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f48fb9"/><path d="M46,91 L60,103 L74,91" fill="#8c1840"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#d4307a"/><polygon points="70,87 63,91 70,95" fill="#d4307a"/><circle cx="60" cy="91" r="3.2" fill="#f48fb9"/><rect x="24" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><rect x="80" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><ellipse cx="60" cy="43" rx="28" ry="20" fill="#f48fb9"/><ellipse cx="60" cy="56" rx="28" ry="12" fill="#f48fb9"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(0 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(72 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(144 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(216 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(288 83 44)"/><circle cx="83" cy="44" r="4" fill="#f9e070"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="43" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><ellipse cx="77" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><path d="M49,53 Q53,49 57,52" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M63,52 Q67,49 71,53" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="53" cy="62" rx="5.5" ry="5" fill="#2a1820"/><ellipse cx="67" cy="62" rx="5.5" ry="5" fill="#2a1820"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><line x1="48" y1="58" x2="45" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="52" y1="57" x2="51" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="56" y1="57" x2="57" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="62" y1="57" x2="63" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="57" x2="67" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="70" y1="58" x2="73" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M52,77 Q60,84 68,77" stroke="#d4307a" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="name">感性<br>さくら型</span>
+    </div>
+    <div class="char-mini">
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#edfafa"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#5cc8cf"/><path d="M46,91 L60,103 L74,91" fill="#145c64"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#145c64"/><polygon points="70,87 63,91 70,95" fill="#145c64"/><circle cx="60" cy="91" r="3.2" fill="#5cc8cf"/><path d="M31,52 C23,63 25,73 27,83 C29,91 31,98 33,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M89,52 C97,63 95,73 93,83 C91,91 89,98 87,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="44" rx="29" ry="21" fill="#5cc8cf"/><path d="M31,50 Q39,34 49,44 Q54,30 60,41 Q66,30 71,44 Q81,34 89,50 Z" fill="#5cc8cf"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-145 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(145 79 36)"/><ellipse cx="79" cy="36" rx="2.5" ry="4" fill="#5cc8cf"/><path d="M77,33 Q74,26 71,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M81,33 Q84,26 87,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="71" cy="23" r="2.2" fill="#80d8de"/><circle cx="87" cy="23" r="2.2" fill="#80d8de"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><path d="M49,53 Q53,49 57,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M63,53 Q67,49 71,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#145c64"/><circle cx="67" cy="62" r="5.5" fill="#145c64"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M51,77 Q60,85 69,77" stroke="#145c64" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="name">挑戦<br>バタフライ型</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="1" width="18" height="20" rx="5" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="6" y1="8" x2="16" y2="8" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="12" x2="16" y2="12" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="16" x2="12" y2="16" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="#0ba298"/><path d="M15,15.5 L15.8,16.5 L17.5,14.5" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> 全12問</span>
+    <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="12" r="9" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="11" y1="5" x2="11" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="2" x2="14" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="11" y1="12" x2="11" y2="8" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="12" x2="14.5" y2="12" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="12" r="1.5" fill="#0ba298"/></svg> 約3分</span>
+    <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="9" width="20" height="12" rx="3" fill="#edfafa" stroke="#5cc8cf" stroke-width="1.8"/><rect x="1" y="6" width="20" height="4" rx="2" fill="#5cc8cf" opacity=".6" stroke="#5cc8cf" stroke-width="1.5"/><line x1="11" y1="6" x2="11" y2="21" stroke="white" stroke-width="1.8"/><path d="M11,6 C11,4 9,2 7,3 C5,4 6,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/><path d="M11,6 C11,4 13,2 15,3 C17,4 16,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/></svg> 完全無料</span>
+  </div>
+  <button class="btn btn-primary" onclick="startQuiz()">診断スタート →</button>
+</div>
+
+<!-- ══════════ QUIZ ══════════ -->
+<div class="card card-accent" id="s-quiz">
+  <div class="progress-area">
+    <div class="progress-top">
+      <span class="progress-qnum" id="prog-qnum">Q1 / 12</span>
+      <span class="progress-pct" id="prog-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div id="q-area"></div>
+  <div class="nav-row">
+    <button class="btn btn-ghost" id="btn-back" onclick="prevQ()" style="visibility:hidden">← 戻る</button>
+    <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>次へ →</button>
+  </div>
+</div>
+
+<!-- ══════════ RESULT ══════════ -->
+<div class="card card-accent fade-up" id="s-result">
+
+  <!-- HERO -->
+  <div class="result-hero">
+    <div class="result-type-badge" id="res-badge"></div>
+    <span class="result-char-icon" id="res-icon"></span>
+    <div class="result-type-en" id="res-en"></div>
+    <div class="result-type-ja" id="res-ja"></div>
+    <div class="result-type-desc" id="res-desc"></div>
+  </div>
+
+  <!-- PERSONALITY BARS -->
+  <div class="personality-section">
+    <h3 style="display:flex;align-items:center;gap:6px;"><svg width="20" height="20" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><polygon points="3,26 8,26 8,16 3,16" fill="#5cc8cf"/><polygon points="3,16 8,16 8,21 3,21" fill="#289aa4" opacity="0.5"/><polygon points="11,26 16,26 16,8 11,8" fill="#f2a246"/><polygon points="11,8 16,8 16,15 11,15" fill="#c87820" opacity="0.4"/><polygon points="19,26 24,26 24,13 19,13" fill="#f48fb9"/><polygon points="19,13 24,13 24,19 19,19" fill="#c44870" opacity="0.4"/><line x1="1" y1="26.5" x2="27" y2="26.5" stroke="#ead8ee" stroke-width="1.5"/></svg> あなたのパーソナリティ傾向</h3>
+    <div id="trait-bars"></div>
+  </div>
+
+  <!-- STRENGTH & WEAKNESS TAGS -->
+  <div class="detail-sec">
+    <div class="detail-head">
+      <div class="detail-icon"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#fff4e4"/><polygon points="14,3 15.8,10.5 22,11.5 15.8,12.5 14,20 12.2,12.5 6,11.5 12.2,10.5" fill="#f2a246"/><circle cx="14" cy="11.5" r="2.5" fill="white" opacity=".8"/><circle cx="6" cy="7" r="1.8" fill="#f48fb9" opacity=".75"/><circle cx="23" cy="5" r="1.4" fill="#5cc8cf" opacity=".7"/></svg></div>
+      <span class="detail-title">このタイプの「強み」と「壁」</span>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:6px;letter-spacing:.06em;">STRENGTHS</div>
+      <div class="tag-list" id="res-strengths"></div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;color:#c53030;margin-bottom:6px;letter-spacing:.06em;">CHALLENGES</div>
+      <div class="tag-list" id="res-challenges"></div>
+    </div>
+  </div>
+
+  <!-- WHY STUCK -->
+  <div class="detail-sec">
+    <div class="detail-head">
+      <div class="detail-icon"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#eff4ff"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="#4688df" stroke-width="2.5"/><circle cx="12" cy="12" r="5" fill="#eff4ff"/><circle cx="10" cy="10" r="2" fill="#4688df" opacity=".25"/><line x1="17.5" y1="17.5" x2="23" y2="23" stroke="#4688df" stroke-width="2.8" stroke-linecap="round"/></svg></div>
+      <span class="detail-title">話せない本当の理由</span>
+    </div>
+    <p class="detail-body" id="res-reason"></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- AZUSA MEMO (相談用) -->
+  <div class="azusa-memo">
+    <div class="azusa-memo-label">
+      <span class="sec-icon" style="display:inline-flex;align-items:center;"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#fff0f6"/><rect x="4" y="9" width="20" height="14" rx="5" fill="white" stroke="#f48fb9" stroke-width="2"/><path d="M4,13 L14,19 L24,13" fill="none" stroke="#f48fb9" stroke-width="1.8" stroke-linejoin="round"/><path d="M14,16 Q14,14 16,14 Q18,14 18,16 Q18,18.5 14,20.5 Q10,18.5 10,16 Q10,14 12,14 Q14,14 14,16Z" fill="#f48fb9"/></svg></span> あずさより、あなたへ
+    </div>
+    <p id="res-memo"></p>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-wrap">
+    <div class="video-header">
+      <span class="sec-icon" style="display:inline-flex;align-items:center;gap:6px;vertical-align:middle;"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#eff4ff"/><rect x="3" y="9" width="17" height="11" rx="4" fill="white" stroke="#4688df" stroke-width="2"/><polygon points="20,11 25,14 20,17" fill="#4688df"/><circle cx="11" cy="14" r="4" fill="#4688df" opacity=".15"/><polygon points="9,11.5 9,16.5 15,14" fill="#4688df"/></svg></span> 個別相談って何をするの？あずさより
+    </div>
+    <div class="video-body">
+      <iframe src="https://www.youtube.com/embed/RiF2m5WtcuU" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- CONSULTATION PROMISES -->
+  <div class="detail-sec">
+    <div class="detail-head">
+      <div class="detail-icon"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#eff4ff"/><rect x="4" y="7" width="20" height="17" rx="4" fill="white" stroke="#4688df" stroke-width="2"/><rect x="4" y="7" width="20" height="7" rx="4" fill="#4688df" opacity=".18"/><line x1="4" y1="14" x2="24" y2="14" stroke="#4688df" stroke-width="1.5"/><line x1="9" y1="5" x2="9" y2="10" stroke="#4688df" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="5" x2="19" y2="10" stroke="#4688df" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="19" r="1.5" fill="#f48fb9"/><circle cx="14" cy="19" r="1.5" fill="#4688df"/><circle cx="19" cy="19" r="1.5" fill="#5cc8cf"/></svg></div>
+      <span class="detail-title">個別相談で解決できること</span>
+    </div>
+    <ul class="check-list" id="res-promises"></ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <div class="cta-eyebrow">Next Step</div>
+    <div class="cta-headline" id="cta-headline">
+      無料の個別相談で<br><span>あなただけのロードマップ</span>を<br>一緒に作りましょう
+    </div>
+    <p class="cta-body" id="cta-body">
+      約60〜90分のオンライン相談。<br>
+      英語力・目標・課題をヒアリングして、<br>
+      今日から使える学習設計をその場でお伝えします。
+    </p>
+    <a class="cta-btn" id="cta-btn" href="https://liff.line.me/1657782286-OBLENejd?calendar_salon_id=14390&ts=1776240098" target="_blank">
+      📅 無料個別相談に申し込む
+    </a>
+    <p class="cta-footnote">✦ 完全無料・勧誘なし ✦ オンライン対応 ✦ 60〜90分</p>
+  </div>
+
+  <div class="retry-row">
+    <button class="btn-retry" onclick="retry()">もう一度診断する</button>
+  </div>
+</div>
+
+<!-- ══════════ DATA & LOGIC ══════════ -->
+<script>
+
+// ─────────────────────────
+//  4 CHARACTER TYPES
+// ─────────────────────────
+const TYPES = {
+
+  lion: {
+    badge:      { text:'タイプ A', bg:'#fff7ed', color:'#9a3412', border:'#fed7aa' },
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff4e4"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f2a246"/><path d="M46,91 L60,103 L74,91" fill="#c87820"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#c87820"/><polygon points="70,87 63,91 70,95" fill="#c87820"/><circle cx="60" cy="91" r="3.2" fill="#e8960a"/><circle cx="60" cy="50" r="32" fill="#e8920a"/><polygon points="60,10 55,26 65,26" fill="#e8920a"/><polygon points="47,13 44,28 55,24" fill="#e8920a"/><polygon points="73,13 76,28 65,24" fill="#e8920a"/><polygon points="35,22 36,37 47,28" fill="#e8920a"/><polygon points="85,22 84,37 73,28" fill="#e8920a"/><circle cx="31" cy="54" r="8" fill="#fce8d4"/><circle cx="89" cy="54" r="8" fill="#fce8d4"/><circle cx="31" cy="54" r="5" fill="#f8c4a0"/><circle cx="89" cy="54" r="5" fill="#f8c4a0"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><path d="M49,54 Q53,50 57,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M63,54 Q67,50 71,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#4a2c10"/><circle cx="67" cy="62" r="5.5" fill="#4a2c10"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M49,76 Q60,86 71,76" stroke="#c87820" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+    en:         'THE ACTION LION',
+    ja:         '行動ライオン型',
+    desc:       '英語への情熱と行動力は誰にも負けない。\nでも「型」がまだ固まっていないため、その熱量が正しい方向に向かいにくいタイプ。',
+    strengths:  ['行動力がある', 'やる気が高い', '変化を楽しめる', '吸収が早い'],
+    challenges: ['基礎の抜け漏れ', '文が作れない', '焦りやすい', '継続が不安定'],
+    traits: [
+      { label:'モチベーション', val: 90 },
+      { label:'インプット量',   val: 55 },
+      { label:'アウトプット',   val: 40 },
+      { label:'メンタル安定',   val: 60 },
+    ],
+    reason: `熱量があるのに話せない——それは「英語の型（文の組み立て方）」がまだ体に入っていないからです。
+
+単語は知っているのに文が作れない、理解はできても言葉が出てこないのは、知識の量ではなく"使える型"が足りていないせいです。
+
+情熱は本物。あとは正しい順序で基礎を積み直すだけで、一気に話せるようになるタイプです。`,
+    memo: `やる気があるのに話せないのは、あなたのせいじゃありません。英語の「型」がまだ体に入っていないだけです。
+
+その熱量は本物。あとは正しい方向に向けるだけで、一気に話せるようになります。個別相談では、あなたの熱量を無駄にしない最短ルートを一緒に設計します。`,
+    promises: [
+      'あなたの英語の"型の抜け漏れ"を4領域で正確に診断する',
+      '熱量を無駄にしない、最短で型を身につける学習ロードマップを提示',
+      'これまでの学習法のどこが間違っていたかを具体的に教える',
+      '今日から始められる1日5分の型トレーニングをその場で設計する',
+    ],
+    cta: {
+      headline: 'その<span>熱量</span>を、正しい「型」に変えよう',
+      body: 'やる気は本物。あとは正しい順序で基礎の「型」を積み上げるだけです。<br>あずさと一緒に、熱量を無駄にしない最短ルートを設計しましょう。',
+      btn: '📅 熱量を「型」に変える相談をする →',
+    },
+  },
+
+  owl: {
+    badge:      { text:'タイプ B', bg:'#f0fdf4', color:'#14532d', border:'#86efac' },
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#eff4ff"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#4688df"/><path d="M46,91 L60,103 L74,91" fill="#1c3870"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#1c3870"/><polygon points="70,87 63,91 70,95" fill="#1c3870"/><circle cx="60" cy="91" r="3.2" fill="#4688df"/><ellipse cx="60" cy="43" rx="30" ry="22" fill="#2a3f6e"/><ellipse cx="32" cy="57" rx="10" ry="14" fill="#2a3f6e"/><ellipse cx="88" cy="57" rx="10" ry="14" fill="#2a3f6e"/><polygon points="45,28 41,11 54,26" fill="#2a3f6e"/><polygon points="75,28 79,11 66,26" fill="#2a3f6e"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><ellipse cx="76" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><path d="M44,52 Q48,48 52,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M68,52 Q72,48 76,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><circle cx="70" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><line x1="61.5" y1="63" x2="58.5" y2="63" stroke="#4688df" stroke-width="2.5"/><line x1="23" y1="60" x2="38.5" y2="61" stroke="#4688df" stroke-width="2.2"/><line x1="81.5" y1="61" x2="97" y2="60" stroke="#4688df" stroke-width="2.2"/><circle cx="50" cy="63" r="4.5" fill="#2a3040"/><circle cx="70" cy="63" r="4.5" fill="#2a3040"/><circle cx="52" cy="61" r="2" fill="white"/><circle cx="72" cy="61" r="2" fill="white"/><circle cx="60" cy="71" r="1.8" fill="#d4987a"/><path d="M52,78 Q60,84 68,78" stroke="#a07850" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    en:         'THE CURIOUS OWL',
+    ja:         '探求フクロウ型',
+    desc:       '英語の知識を深く探求してきた、好奇心旺盛なタイプ。\nでも実践の場がほぼゼロで、頭の中の英語がまだ口につながっていない。',
+    strengths:  ['知識が豊富', '理解力が高い', '観察眼がある', '正確さを大切にする'],
+    challenges: ['アウトプット不足', '口が動かない', '練習相手がいない', '準備過多'],
+    traits: [
+      { label:'モチベーション', val: 65 },
+      { label:'インプット量',   val: 85 },
+      { label:'アウトプット',   val: 20 },
+      { label:'メンタル安定',   val: 72 },
+    ],
+    reason: `「知ってるのに話せない」——これが最も典型的なふくろう型のお悩みです。
+
+英語はスポーツと同じで、知識だけでは話せません。インプットはたくさんしてきたけれど、実際に口から出す練習がほぼゼロという状態です。
+
+"もう少し準備してから"と思い続けている限り、英語は永遠に話せません。知識を口につなげる実践訓練が突破口です。`,
+    memo: `これだけ勉強してきたのに話せないのは、知識が足りないからじゃありません。「頭の中の英語を口につなぐ」練習が、まだできていないだけです。
+
+知識はもう十分あります。あとは橋渡しの一歩だけ。個別相談で、その具体的な方法を一緒に見つけましょう。`,
+    promises: [
+      '今の知識を"話せる英語"に変える具体的なアウトプット練習法を教える',
+      '一人でも続けられる安全な実践環境の作り方を提案する',
+      '週に何分・何をすれば話せるようになるか、リアルな数字で示す',
+      '「準備が終わったら話す」から「話しながら準備する」への意識転換をサポート',
+    ],
+    cta: {
+      headline: '「知ってるのに話せない」を、<span>今日</span>解決しよう',
+      body: '知識は十分あります。あとはアウトプットへの橋渡しだけ。<br>60分で、頭の中の英語を口に出す具体的な方法を一緒に設計します。',
+      btn: '📅 「話せない壁」を今日壊しに行く →',
+    },
+  },
+
+  sakura: {
+    badge:      { text:'タイプ C', bg:'#fff1f2', color:'#9f1239', border:'#fecdd3' },
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff0f6"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f48fb9"/><path d="M46,91 L60,103 L74,91" fill="#8c1840"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#d4307a"/><polygon points="70,87 63,91 70,95" fill="#d4307a"/><circle cx="60" cy="91" r="3.2" fill="#f48fb9"/><rect x="24" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><rect x="80" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><ellipse cx="60" cy="43" rx="28" ry="20" fill="#f48fb9"/><ellipse cx="60" cy="56" rx="28" ry="12" fill="#f48fb9"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(0 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(72 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(144 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(216 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(288 83 44)"/><circle cx="83" cy="44" r="4" fill="#f9e070"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="43" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><ellipse cx="77" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><path d="M49,53 Q53,49 57,52" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M63,52 Q67,49 71,53" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="53" cy="62" rx="5.5" ry="5" fill="#2a1820"/><ellipse cx="67" cy="62" rx="5.5" ry="5" fill="#2a1820"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><line x1="48" y1="58" x2="45" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="52" y1="57" x2="51" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="56" y1="57" x2="57" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="62" y1="57" x2="63" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="57" x2="67" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="70" y1="58" x2="73" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M52,77 Q60,84 68,77" stroke="#d4307a" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    en:         'THE GIFTED SAKURA',
+    ja:         '感性さくら型',
+    desc:       '豊かな感性と語学センスを持つ、才能あふれるタイプ。\nでも「完璧に話せないといけない」という思いが行動にブレーキをかけている。',
+    strengths:  ['繊細な感受性', '丁寧さがある', '観察力が高い', '共感力がある'],
+    challenges: ['メンタルブロック', '完璧主義', '話すのが怖い', '自己評価が低い'],
+    traits: [
+      { label:'モチベーション', val: 70 },
+      { label:'インプット量',   val: 60 },
+      { label:'アウトプット',   val: 25 },
+      { label:'メンタル安定',   val: 30 },
+    ],
+    reason: `英語力の問題ではありません。「間違えたら恥ずかしい」「完璧に話せないといけない」という思い込みが、行動にブレーキをかけています。
+
+実はこのタイプが一番「話せる素質」を持っています。繊細で観察眼があるからこそ、安心できる環境さえ整えば驚くほど伸びます。
+
+英語は完璧じゃなくても伝わります。「正しく話す」より「伝わった体験」を積み重ねることが、自信への一番の近道です。`,
+    memo: `「間違えたらどうしよう」という気持ち、すごくよくわかります。でも実は、このタイプが一番英語の感性を持っています。怖いと感じるのは、それだけ英語を真剣に考えている証拠です。
+
+安心できる場所さえあれば、あなたは必ず話せるようになります。個別相談では、まず「怖くない」という体験を一緒に作るところから始めます。`,
+    promises: [
+      '「怖い」と感じる根本原因を一緒に特定して、具体的に取り除く方法を考える',
+      '間違えても大丈夫な、安心・安全な練習の場を提供する',
+      'メンタルブロックを外すマインドセットの変え方を伝える',
+      '小さな成功体験から自信を積み上げるスモールステップを設計する',
+    ],
+    cta: {
+      headline: '「怖い」という気持ちを、<span>安全に</span>取り除こう',
+      body: 'あなたには英語のセンスがあります。必要なのは、安心できる場所と正しいサポートだけ。<br>一緒に、小さな成功体験を積み上げていきましょう。',
+      btn: '📅 安全に「話せる自分」への一歩を踏み出す →',
+    },
+  },
+
+  butterfly: {
+    badge:      { text:'タイプ D', bg:'#faf5ff', color:'#581c87', border:'#d8b4fe' },
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#edfafa"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#5cc8cf"/><path d="M46,91 L60,103 L74,91" fill="#145c64"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#145c64"/><polygon points="70,87 63,91 70,95" fill="#145c64"/><circle cx="60" cy="91" r="3.2" fill="#5cc8cf"/><path d="M31,52 C23,63 25,73 27,83 C29,91 31,98 33,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M89,52 C97,63 95,73 93,83 C91,91 89,98 87,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="44" rx="29" ry="21" fill="#5cc8cf"/><path d="M31,50 Q39,34 49,44 Q54,30 60,41 Q66,30 71,44 Q81,34 89,50 Z" fill="#5cc8cf"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-145 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(145 79 36)"/><ellipse cx="79" cy="36" rx="2.5" ry="4" fill="#5cc8cf"/><path d="M77,33 Q74,26 71,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M81,33 Q84,26 87,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="71" cy="23" r="2.2" fill="#80d8de"/><circle cx="87" cy="23" r="2.2" fill="#80d8de"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><path d="M49,53 Q53,49 57,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M63,53 Q67,49 71,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#145c64"/><circle cx="67" cy="62" r="5.5" fill="#145c64"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M51,77 Q60,85 69,77" stroke="#145c64" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    en:         'THE RESILIENT BUTTERFLY',
+    ja:         '挑戦バタフライ型',
+    desc:       '何度チャレンジしても諦めない、強い心を持つタイプ。\nでも継続の「仕組み」がなく、何度も再スタートを繰り返してしまっている。',
+    strengths:  ['諦めない心がある', '感受性が豊か', '変化への適応力', '夢が大きい'],
+    challenges: ['習慣化できない', '継続が苦手', '方向性が定まらない', 'モチベーションが波状'],
+    traits: [
+      { label:'モチベーション', val: 75 },
+      { label:'インプット量',   val: 40 },
+      { label:'アウトプット',   val: 35 },
+      { label:'メンタル安定',   val: 50 },
+    ],
+    reason: `何度も英語学習に挑戦してきた——その事実が、諦めていない証拠です。
+
+続かないのは意志が弱いからではありません。「習慣化の仕組み」がないからです。モチベーションに頼るだけの学習は、誰でも続きません。
+
+外からのサポートと、毎日続く小さな仕組みさえあれば、バタフライ型は必ず飛べます。`,
+    memo: `何度も挑戦してきたこと、それだけで十分すごいと思います。続かなかったのは意志が弱いからじゃない。続く「仕組み」がなかっただけです。
+
+バタフライ型の人は、正しい仕組みさえあれば一気に変わります。個別相談で、あなたに合った「続く設計」を一緒に作りましょう。`,
+    promises: [
+      '「続かない理由」を仕組みの観点で具体的に特定する',
+      '意志力に頼らず毎日続く、1日5分の学習設計をする',
+      '伴走サポートで「一人でやるより確実に続く」環境を作る',
+      '過去の失敗から学んだことを活かした、今度こそのロードマップを設計する',
+    ],
+    cta: {
+      headline: '今度こそ「続く仕組み」を、<span>一緒に</span>作ろう',
+      body: '続かないのはあなたのせいじゃありません。正しい仕組みさえあれば、必ず続きます。<br>60分で、意志力に頼らない学習設計をします。',
+      btn: '📅 今度こそ続く仕組みを作る →',
+    },
+  },
+};
+
+// ─────────────────────────
+//  12 QUESTIONS
+// ─────────────────────────
+const QS = [
+  {
+    cat: '🎯 動機・きっかけ',
+    text: '英語を話せるようになりたい、と思ったのは主にどんな気持ちからですか？',
+    scene: '正直に感じることを選んでください。',
+    opts: [
+      { label: '海外・外資・留学など、英語が使える世界へ飛び込みたいという憧れがある', s: { lion: 2 } },
+      { label: '将来や仕事のために必要だとわかっているのに、まだ本当には動けていない', s: { owl: 2 } },
+      { label: '英語が話せない自分にコンプレックスがあり、そんな自分を変えたい', s: { sakura: 2 } },
+      { label: '何度も「今度こそ」と始めてきた。この繰り返しをそろそろ終わらせたい', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '📚 学習スタイル',
+    text: '英語の勉強で、自然とやっていること・一番なじんでいるのはどれですか？',
+    scene: '一番近いものを選んでください。',
+    opts: [
+      { label: '声に出したり、実際に使う場に飛び込んで練習すること', s: { lion: 2 } },
+      { label: '文法・単語・参考書でしっかり理解してから進めること', s: { owl: 2 } },
+      { label: '間違えるのが怖くて、インプットが中心。アウトプットが後回しになりがち', s: { sakura: 2 } },
+      { label: '話題の教材やアプリを試すが、気づくといつの間にか使わなくなっている', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '💬 話す場面',
+    text: '外国人に突然話しかけられた！あなたはどう反応しますか？',
+    scene: '一番近いものを選んでください。',
+    opts: [
+      { label: '完璧じゃなくても、単語を並べてでも話しかける', s: { lion: 3 } },
+      { label: '頭の中で文章を組み立ててから、慎重に答えようとする', s: { owl: 2 } },
+      { label: '体が固まってしまい、ほとんど何も言えなくなる', s: { sakura: 3 } },
+      { label: '焦って頭が真っ白になるか、思わず日本語が出てしまう', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '🧠 学習経験',
+    text: '「英語を身につけよう」と行動してきた経験を振り返ると？',
+    scene: '',
+    opts: [
+      { label: 'さまざまなアプリや教材を試してきた。でもどれも続かなかった', s: { butterfly: 2, owl: 1 } },
+      { label: '英会話スクールや動画でかなりインプットしてきた', s: { owl: 2 } },
+      { label: 'やろうと思いながら、なかなか一歩が出ない状態が続いている', s: { sakura: 2 } },
+      { label: '始めるのは早いし熱量もある。でもいつも途中で止まってしまう', s: { lion: 2, butterfly: 1 } },
+    ],
+  },
+  {
+    cat: '😰 ブレーキ',
+    text: '英語を使う場面で、一番「つらい」と感じるのはどんなとき？',
+    scene: '',
+    opts: [
+      { label: '伝えたいことが英語の文として出てこないとき', s: { lion: 3 } },
+      { label: '知っているはずの単語が口から出てこないとき', s: { owl: 3 } },
+      { label: '間違えることや笑われることが怖くて動けないとき', s: { sakura: 3 } },
+      { label: '頑張っているのに全然上達している感じがしないとき', s: { butterfly: 3 } },
+    ],
+  },
+  {
+    cat: '🔄 継続パターン',
+    text: '英語学習の継続について、あなたに一番近いのは？',
+    scene: '',
+    opts: [
+      { label: 'やる気があるときはとことんやる。でも習慣化ができずムラが激しい', s: { lion: 2 } },
+      { label: '半年以上、ある程度コンスタントに続けてきた時期がある', s: { owl: 2 } },
+      { label: '始めること自体が怖くて、なかなかスタートできない', s: { sakura: 2 } },
+      { label: '始めては止まる、また始めるを何度も繰り返してきた', s: { butterfly: 3 } },
+    ],
+  },
+  {
+    cat: '🌟 自己評価',
+    text: '友達に「英語できるの？」と聞かれたら、あなたはどう答えますか？',
+    scene: '',
+    opts: [
+      { label: '「ちょっとならね！」と自信ありげに言う', s: { lion: 2 } },
+      { label: '「勉強はしてるけど、話すのは苦手で……」と正直に言う', s: { owl: 2 } },
+      { label: '「全然ダメで……」と自己評価低めに答える', s: { sakura: 2 } },
+      { label: '「今また始めたところ！」と答える', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '⚡ 行動パターン',
+    text: '新しい英語学習ツール・アプリを見つけた！あなたはどうしますか？',
+    scene: '',
+    opts: [
+      { label: '「まずやってみよう！」と深く考えずすぐ試す', s: { lion: 2 } },
+      { label: 'レビューや評判をしっかり確認してから判断する', s: { owl: 2 } },
+      { label: '「私には難しそう」「合わなかったら怖い」とためらってしまう', s: { sakura: 2 } },
+      { label: 'ダウンロードするが、気づいたら使わなくなっている', s: { butterfly: 3 } },
+    ],
+  },
+  {
+    cat: '💭 ミスへの反応',
+    text: '英語で話していて、間違いを指摘されたら？',
+    scene: '',
+    opts: [
+      { label: '「そうなんだ！」とメモして、すぐ次に気持ちを向ける', s: { lion: 2 } },
+      { label: '「なぜ間違えたのか」を丁寧に確認したくなる', s: { owl: 2 } },
+      { label: 'その場で恥ずかしくなり、次から話すのが怖くなる', s: { sakura: 3 } },
+      { label: 'しばらくへこむが、気持ちを切り替えようとする', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '🎯 理想のゴール',
+    text: '「英語ができた！」と感じる場面で、一番うれしいのはどれですか？',
+    scene: '',
+    opts: [
+      { label: '外国人との会話で、思ったより伝わったと実感できたとき', s: { lion: 2 } },
+      { label: '英語の映画や本が、辞書なしでスムーズに理解できるようになったとき', s: { owl: 2 } },
+      { label: 'ネイティブに「上手！」と言ってもらえたとき', s: { sakura: 2 } },
+      { label: '「以前の自分と違う」と、ちゃんと続けられた自分を実感したとき', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '🌍 英語の使い道',
+    text: '英語が話せるようになったら、一番したいことは何ですか？',
+    scene: '',
+    opts: [
+      { label: '世界を旅して、現地の人と気軽に話したい', s: { lion: 2 } },
+      { label: '英語で深い話や専門的な会話ができるようになりたい', s: { owl: 2 } },
+      { label: '自分の気持ちや考えを、英語でちゃんと伝えられるようになりたい', s: { sakura: 2 } },
+      { label: 'まず「日常会話で困らない自分」になりたい', s: { butterfly: 2 } },
+    ],
+  },
+  {
+    cat: '🚀 今の一歩',
+    text: '今のあなたの状況に、一番近いものはどれですか？',
+    scene: '正直に選んでください。これが診断精度に一番影響します。',
+    opts: [
+      { label: 'やる気はある。でも何から始めればいいか、正直わからない', s: { lion: 3 } },
+      { label: '知識はあるのに、実際にはほとんど話せていない', s: { owl: 3 } },
+      { label: '話せるようになりたい。でも恥ずかしくて一歩が踏み出せない', s: { sakura: 3 } },
+      { label: '何度も挑戦してきた。でも続けられず、また「また始める」になっている', s: { butterfly: 3 } },
+    ],
+  },
+];
+
+// ─────────────────────────
+//  STATE
+// ─────────────────────────
+let cur         = 0;
+let answers     = Array(QS.length).fill(null);
+let ctaObserver = null;
+
+// ─────────────────────────
+//  FUNCTIONS
+// ─────────────────────────
+function startQuiz() {
+  show('s-quiz');
+  renderQ();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQ() {
+  const q   = QS[cur];
+  const pct = Math.round((cur / QS.length) * 100);
+
+  document.getElementById('prog-qnum').textContent  = `Q${cur + 1} / ${QS.length}`;
+  document.getElementById('prog-pct').textContent   = pct + '%';
+  document.getElementById('prog-fill').style.width  = pct + '%';
+  document.getElementById('btn-back').style.visibility = cur === 0 ? 'hidden' : 'visible';
+
+  const isLast = cur === QS.length - 1;
+  const btn    = document.getElementById('btn-next');
+  btn.textContent = isLast ? '結果を見る 🎉' : '次へ →';
+  btn.disabled    = answers[cur] === null;
+
+  const letters = ['A','B','C','D'];
+  let html = `<div class="q-category">${q.cat}</div>
+              <div class="q-text">${q.text}</div>`;
+  if (q.scene) html += `<div class="q-scene">${q.scene}</div>`;
+  html += `<div class="opts">`;
+  q.opts.forEach((o, i) => {
+    const sel = answers[cur] === i ? 'sel' : '';
+    html += `<button class="opt-btn ${sel}" onclick="pick(${i})">
+               <span class="opt-letter">${letters[i]}</span>
+               <span>${o.label}</span>
+             </button>`;
+  });
+  html += `</div>`;
+
+  const area = document.getElementById('q-area');
+  area.innerHTML = html;
+  area.classList.remove('fade-up');
+  void area.offsetWidth;
+  area.classList.add('fade-up');
+}
+
+function pick(idx) {
+  answers[cur] = idx;
+  document.getElementById('btn-next').disabled = false;
+  renderQ();
+}
+
+function nextQ() {
+  if (answers[cur] === null) return;
+  if (cur < QS.length - 1) {
+    cur++;
+    renderQ();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    calcResult();
+  }
+}
+
+function prevQ() {
+  if (cur > 0) { cur--; renderQ(); window.scrollTo({ top:0, behavior:'smooth' }); }
+}
+
+function calcResult() {
+  const sc = { lion:0, owl:0, sakura:0, butterfly:0 };
+  answers.forEach((ans, qi) => {
+    if (ans === null) return;
+    const s = QS[qi].opts[ans].s;
+    Object.keys(s).forEach(k => { sc[k] += s[k]; });
+  });
+  const winner = Object.keys(sc).reduce((a,b) => sc[a] >= sc[b] ? a : b);
+  showResult(winner, sc);
+}
+
+function showResult(typeId, sc) {
+  const t = TYPES[typeId];
+
+  // badge
+  const badge = document.getElementById('res-badge');
+  badge.textContent       = t.badge.text;
+  badge.style.background  = t.badge.bg;
+  badge.style.color       = t.badge.color;
+  badge.style.border      = `1px solid ${t.badge.border}`;
+  badge.style.padding     = '4px 14px';
+  badge.style.borderRadius = '99px';
+  badge.style.fontSize    = '11px';
+  badge.style.fontWeight  = '700';
+  badge.style.letterSpacing = '.1em';
+  badge.style.textTransform = 'uppercase';
+
+  document.getElementById('res-icon').innerHTML = t.icon;
+  document.getElementById('res-en').textContent   = t.en;
+  document.getElementById('res-ja').textContent   = t.ja;
+  document.getElementById('res-desc').textContent = t.desc;
+
+  // traits (use type-defined percentages)
+  let barsHtml = '';
+  t.traits.forEach(tr => {
+    barsHtml += `
+      <div class="trait-row">
+        <div class="trait-labels">
+          <strong>${tr.label}</strong>
+          <span>${tr.val}%</span>
+        </div>
+        <div class="trait-track">
+          <div class="trait-fill" style="width:0%" data-val="${tr.val}%"></div>
+        </div>
+      </div>`;
+  });
+  document.getElementById('trait-bars').innerHTML = barsHtml;
+
+  // strengths & challenges
+  document.getElementById('res-strengths').innerHTML =
+    t.strengths.map(s => `<span class="tag tag-good">${s}</span>`).join('');
+  document.getElementById('res-challenges').innerHTML =
+    t.challenges.map(c => `<span class="tag tag-bad">${c}</span>`).join('');
+
+  // text sections
+  document.getElementById('res-reason').textContent   = t.reason;
+  document.getElementById('res-memo').textContent     = t.memo;
+
+  // promises
+  document.getElementById('res-promises').innerHTML =
+    t.promises.map(p => `<li>${p}</li>`).join('');
+
+  // type-specific CTA
+  document.getElementById('cta-headline').innerHTML = t.cta.headline;
+  document.getElementById('cta-body').innerHTML     = t.cta.body;
+  document.getElementById('cta-btn').textContent    = t.cta.btn;
+
+  // floating CTA
+  document.getElementById('floating-cta-link').textContent = t.cta.btn;
+
+  // ─── type-color icon tinting ───
+  const _secBg = {lion:'#fff4e4',owl:'#eff4ff',sakura:'#fff0f6',butterfly:'#edfafa'}[typeId];
+  document.querySelectorAll('.detail-icon svg circle:first-child, .sec-icon svg circle:first-child').forEach(c => c.setAttribute('fill', _secBg));
+  // cta-headline accent color matches type
+  const _typeAccent = {lion:'#e8920a',owl:'#4688df',sakura:'#d4307a',butterfly:'#289aa4'}[typeId];
+  document.querySelectorAll('.cta-headline span').forEach(el => el.style.color = _typeAccent);
+
+  show('s-result');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setupFloatingCTA();
+
+  // animate trait bars
+  setTimeout(() => {
+    document.querySelectorAll('.trait-fill').forEach(el => {
+      el.style.width = el.dataset.val;
+    });
+  }, 400);
+}
+
+function setupFloatingCTA() {
+  const el = document.getElementById('floating-cta');
+  if (ctaObserver) ctaObserver.disconnect();
+  ctaObserver = new IntersectionObserver(entries => {
+    el.style.display = entries[0].isIntersecting ? 'none' : 'flex';
+  }, { threshold: 0.3 });
+  ctaObserver.observe(document.querySelector('.cta-card'));
+}
+
+function show(id) {
+  ['s-start','s-quiz','s-result'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+  if (id !== 's-result') {
+    document.getElementById('floating-cta').style.display = 'none';
+    if (ctaObserver) { ctaObserver.disconnect(); ctaObserver = null; }
+  }
+}
+
+function retry() {
+  cur     = 0;
+  answers = Array(QS.length).fill(null);
+  show('s-start');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<!-- Floating CTA -->
+<div id="floating-cta">
+  <a id="floating-cta-link" class="floating-cta-link"
+     href="https://liff.line.me/1657782286-OBLENejd?calendar_salon_id=14390&ts=1776240098"
+     target="_blank">📅 無料個別相談に申し込む</a>
+</div>
+</body>
+</html>
