@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>行動ライオン型 詳細ガイド | Azusa English</title>
+  <style>
+    :root {
+      --bg: #fdf8f3;
+      --paper: #ffffff;
+      --dark: #2d3748;
+      --mid: #4a5568;
+      --gray: #718096;
+      --teal: #0ba298;
+      --teal-xl: #e6f7f6;
+      --border: #ead8ee;
+      --accent: #e8920a;
+      --shadow: 0 10px 30px rgba(79, 63, 52, .10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.7;
+      padding: 18px 14px 36px;
+    }
+    .wrap { width: 100%; max-width: 580px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex;
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 4px 0 14px;
+    }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 22px 20px;
+      margin-bottom: 16px;
+    }
+    .hero { text-align: center; border-top: 5px solid var(--accent); }
+    .hero-icon { display: block; width: 96px; height: 96px; margin: 0 auto 10px; filter: drop-shadow(0 6px 16px rgba(0,0,0,.12)); }
+    .hero-icon svg { width: 96px; height: 96px; }
+    .eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .14em; margin-bottom: 4px; }
+    h1 { font-size: 28px; line-height: 1.25; font-weight: 900; margin-bottom: 6px; }
+    .lead { color: var(--gray); font-size: 14px; }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--mid);
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+    .section-title::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, white);
+    }
+    .step-card {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-card:last-child { border-bottom: 0; padding-bottom: 0; }
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(0,0,0,.14);
+    }
+    .step-card h3 { font-size: 15px; line-height: 1.45; margin-bottom: 6px; color: var(--dark); }
+    .step-card p, .faq-item p { font-size: 14px; color: var(--mid); }
+    .pitfall-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .pitfall-list li {
+      position: relative;
+      padding: 11px 12px 11px 36px;
+      background: #fff7f7;
+      border: 1px solid #fed7d7;
+      border-radius: 12px;
+      color: #8a2c2c;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .pitfall-list li::before {
+      content: '!';
+      position: absolute;
+      left: 12px;
+      top: 13px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #f56565;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fffefe;
+      overflow: hidden;
+    }
+    .faq-item summary {
+      cursor: pointer;
+      padding: 13px 14px;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 800;
+      list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; float: right; color: var(--accent); font-weight: 900; }
+    .faq-item[open] summary::after { content: '-'; }
+    .faq-item p { padding: 0 14px 14px; }
+    .cta-card {
+      text-align: center;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 72%, #ffffff));
+      color: white;
+      border: 0;
+      padding: 24px 20px;
+    }
+    .cta-card h2 { font-size: 22px; line-height: 1.35; margin-bottom: 10px; }
+    .cta-card p { font-size: 14px; margin-bottom: 16px; opacity: .96; }
+    .cta-btn {
+      display: block;
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 999px;
+      background: white;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.16);
+    }
+    @media (min-width: 520px) {
+      body { padding-top: 26px; }
+      .card { padding: 26px 24px; }
+      h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back-link" href="eigo-shindan.html">← 診断結果に戻る</a>
+
+    <section class="card hero">
+      <span class="hero-icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff4e4"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f2a246"/><path d="M46,91 L60,103 L74,91" fill="#c87820"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#c87820"/><polygon points="70,87 63,91 70,95" fill="#c87820"/><circle cx="60" cy="91" r="3.2" fill="#e8960a"/><circle cx="60" cy="50" r="32" fill="#e8920a"/><polygon points="60,10 55,26 65,26" fill="#e8920a"/><polygon points="47,13 44,28 55,24" fill="#e8920a"/><polygon points="73,13 76,28 65,24" fill="#e8920a"/><polygon points="35,22 36,37 47,28" fill="#e8920a"/><polygon points="85,22 84,37 73,28" fill="#e8920a"/><circle cx="31" cy="54" r="8" fill="#fce8d4"/><circle cx="89" cy="54" r="8" fill="#fce8d4"/><circle cx="31" cy="54" r="5" fill="#f8c4a0"/><circle cx="89" cy="54" r="5" fill="#f8c4a0"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><path d="M49,54 Q53,50 57,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M63,54 Q67,50 71,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#4a2c10"/><circle cx="67" cy="62" r="5.5" fill="#4a2c10"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M49,76 Q60,86 71,76" stroke="#c87820" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></span>
+      <div class="eyebrow">THE ACTION LION</div>
+      <h1>行動ライオン型</h1>
+      <p class="lead">あなたのタイプに合わせた、今日から動ける詳細ガイドです。</p>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">処方箋 3ステップ</h2>
+      <div class="step-card"><div class="step-num">1</div><div><h3>Step1「まず「型」を3つ覚える」</h3><p>「I want to〜」「I think〜」「Can you〜？」この3パターンだけで会話の6割はカバーできます。単語を増やすより先に、この型を声に出して体に染み込ませましょう。毎日1回、この3文を声に出すだけでOKです。</p></div></div>
+<div class="step-card"><div class="step-num">2</div><div><h3>Step2「実際に使う場に飛び込む」</h3><p>完璧じゃなくていいです。HelloTalkやSpeakなどのアプリで、今日覚えた型を1回使うだけでOK。使ってみることが型を定着させる唯一の方法です。「準備が終わったら」は永遠に来ないので、今日1文使うことだけを目標にしてください。</p></div></div>
+<div class="step-card"><div class="step-num">3</div><div><h3>Step3「「熱量のムラ」を記録する」</h3><p>「なぜ続かないか」ではなく「いつ熱量が上がるか」を日記やメモに書きましょう。ライオン型は外部刺激で一気に伸びるので、自分の熱量パターンを知ることが最大の武器になります。熱量が上がるタイミングに集中して練習する設計が最も効率的です。</p></div></div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">やりがちな落とし穴</h2>
+      <ul class="pitfall-list">
+        <li>基礎が固まる前にスピーキングだけ練習しようとする</li>
+<li>やる気に任せて詰め込みすぎて燃え尽きる</li>
+<li>「話せた！」感覚だけ追いかけて復習をしない</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">よくある質問</h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary>Q やる気があるのになぜ続かないの？</summary><p>A「意志が弱いからじゃないです。英語の「型（文の組み立て方）」が体に入っていない状態で話そうとしているから、毎回ゼロから考えてしまって疲れるんです。型が入ると、会話が一気にラクになります。やる気が出たり消えたりするのは人間として自然なこと。「続かない自分はダメだ」と思う必要はないです。あなたの熱量をどこに向ければいいか、一緒に整理しましょう。」</p></details>
+        <details class="faq-item"><summary>Q どの教材から始めればいい？</summary><p>A「ライオン型は教材より「使う場」が先です。「I want to〜」「I think〜」「Can you〜?」この3パターンだけ覚えて、今日使ってみることから始めてください。完璧に準備してから話そうとすると、永遠に始まらないので。」</p></details>
+        <details class="faq-item"><summary>Q 型を身につけるのにどれくらいかかる？</summary><p>A「毎日5分続けるなら、2〜4週間で「あ、文が出てくる」感覚が変わります。変化って急に来るんじゃなくて、積み重ねがある日突然つながる感じで来ます。「全然変わってない」と思っていた時期も、ちゃんと積み重なっています。」</p></details>
+        <details class="faq-item"><summary>Q 何歳でも遅くないですか？</summary><p>A「遅くないです。私の受講生は30代・40代が中心で、むしろ大人の方が伸びるケースが多いです。子どもと違って「なぜそうなるか」を理解しながら学べるので、正しいやり方さえわかれば思ったより速く変われます。「もう遅い」って思うとき、それって誰かに言われましたか？年齢は事実だけど、「だから無理」は思い込みです。その思い込みがどこから来ているか、一度一緒に整理してみませんか。」</p></details>
+        <details class="faq-item"><summary>Q 才能がないと話せないんじゃないですか？</summary><p>A「英語は才能じゃなくて、順序の問題です。「才能がない」って思うとき、それって誰かに言われましたか？それとも、何度かうまくいかなかった後に自分でつけたレッテルですか？うまくいかない経験が重なると、人は「自分にはできない」という思い込みをつくってしまう。でもそれは事実じゃなくて、過去の経験が作ったフィルターでしかないんです。才能がないんじゃなくて、合ったアプローチにまだ出会えていないだけ。」</p></details>
+        <details class="faq-item"><summary>Q 仕事・子育てしながらできますか？</summary><p>A「できます。1日5〜15分から始められるので、まとまった時間がなくても大丈夫。受講生の9割が働きながら、または子育て中です。」</p></details>
+        <details class="faq-item"><summary>Q 英会話スクールと何が違うの？</summary><p>A「スクールは「話す場所」を提供してくれるけど、「なぜ話せないか」の根本は教えてくれません。この診断で分かったあなたのタイプに合わせて、原因から解決していくのが私のやり方です。スクールに通っても変わらなかった経験がある方が多いんですが、それはあなたのせいじゃなくて、あなたに合ったアプローチじゃなかっただけ。無料相談では、そこから一緒に見ていきます。」</p></details>
+        <details class="faq-item"><summary>Q どれくらいで話せるようになりますか？</summary><p>A「タイプや目標によって変わりますが、「日常会話で困らないレベル」なら3〜6ヶ月が目安です。「何のために話せるようになりたいのか」が明確な人ほど、変わるのが速いです。そこがまだぼんやりしているなら、相談の中で一緒に言語化しましょう。ゴールが決まると、やるべきことが一気にシンプルになります。」</p></details>
+        <details class="faq-item"><summary>Q カタカナ発音でも大丈夫ですか？</summary><p>A「全然大丈夫です。世界の英語話者の75%はノンネイティブで、みんなそれぞれのアクセントで話しています。発音より「伝わる文を作れるか」の方が100倍大切です。」</p></details>
+        <details class="faq-item"><summary>Q 独学でできますか？</summary><p>A「独学でできる部分と、一人では気づけない部分があります。どっちもあるので、自分に合ったバランスを見つけることが大事だと思っています。あなたの場合どちらが向いているか、一度話してみませんか。」</p></details>
+      </div>
+    </section>
+
+    <section class="card cta-card">
+      <h2>その熱量を、正しい「型」に変えよう</h2>
+      <p>やる気は本物。あとは正しい方向に向けるだけです。60分で、あなただけの学習設計を一緒に作りましょう。</p>
+      <a class="cta-btn" href="https://lin.ee/xPfBnVN" target="_blank" rel="noopener">📅 無料個別相談に申し込む →</a>
+    </section>
+  </main>
+</body>
+</html>
