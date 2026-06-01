@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>英語タイプ診断｜Azusa English</title>
+  <title>えいごMBTI診断｜Azusa English</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --teal:     #0682a0;
-      --teal-d:   #055f80;
-      --teal-m:   #38b6d0;
-      --teal-l:   #a0d8ea;
-      --teal-xl:  #ddf0f7;
-      --teal-xxl: #f0f8fc;
-      --coral:    #ff6b6b;
-      --coral-d:  #e85a4f;
-      --coral-l:  #ffa8a0;
+      --teal:     #00B4C8;
+      --teal-d:   #0090A0;
+      --teal-m:   #40CCE0;
+      --teal-lt:  #E0F7F9;
+      --coral:    #F2B705;
+      --bg:       #F9F6F2;
+      --teal-l:   #E0F7F9;
+      --teal-xl:  #E0F7F9;
+      --teal-xxl: #F2FBFC;
+      --coral-d:  #D9A300;
+      --coral-l:  #FFE08A;
       --white:    #ffffff;
       --off:      #f8fffe;
       --dark:     #0f2524;
@@ -34,7 +36,7 @@
 
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background: #fdf8f3;
+      background: #F9F6F2;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -59,8 +61,9 @@
       color: var(--teal);
     }
     .site-tagline {
-      font-size: 11px;
-      color: var(--gray);
+      font-size: 12px;
+      color: #0090A0;
+      font-weight: 700;
       letter-spacing: .08em;
     }
 
@@ -80,30 +83,56 @@
     }
     .card-accent::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
+      display: block;
       height: 4px;
-      background: linear-gradient(90deg, var(--teal), var(--teal-m), #a8e8e5);
+      background: linear-gradient(90deg, #00B4C8, #F2B705);
+      border-radius: 4px 4px 0 0;
+      margin: -24px -24px 20px;
     }
 
     /* ─── START SCREEN ─── */
     #s-start { text-align: center; }
-    #s-start .hero-emoji {
-      display: block;
-      width: 80px; height: 80px;
-      margin: 0 auto 16px;
-      filter: drop-shadow(0 4px 12px rgba(6,130,160,.2));
+    .azusa-intro {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-align: left;
     }
-    #s-start .hero-emoji svg { width: 80px; height: 80px; }
+    .azusa-intro-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 3px solid #F9F6F2;
+      box-shadow: 0 2px 8px rgba(6,130,160,0.15);
+    }
+    .azusa-intro-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
+    }
+    .azusa-intro-desc {
+      font-size: 13px;
+      color: #2d4a48;
+      line-height: 1.6;
+    }
     #s-start h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 900;
-      line-height: 1.55;
+      line-height: 1.4;
       margin-bottom: 12px;
       color: var(--dark);
     }
     #s-start h1 span {
-      color: var(--teal);
+      color: #00B4C8;
     }
     #s-start .lead {
       font-size: 14px;
@@ -114,27 +143,33 @@
 
     /* character preview */
     .char-preview {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
+      justify-content: space-between;
       gap: 8px;
       margin-bottom: 28px;
     }
     .char-mini {
-      background: var(--teal-xxl);
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 10px 6px;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      width: 22%;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
     }
-    .char-mini .icon { display: block; width: 36px; height: 36px; }
-    .char-mini .icon svg { width: 36px; height: 36px; }
+    .char-mini:nth-child(1) { background: #FFF4E6; }
+    .char-mini:nth-child(2) { background: #EFF4FF; }
+    .char-mini:nth-child(3) { background: #FFF0F6; }
+    .char-mini:nth-child(4) { background: #EDFAFA; }
+    .char-mini .icon { display: block; width: 52px; height: 52px; }
+    .char-mini .icon svg { width: 52px; height: 52px; }
     .char-mini .name {
-      font-size: 9.5px;
       font-weight: 700;
-      color: var(--teal-d);
+      font-size: 11px;
+      margin-top: 6px;
+      color: #0090A0;
       text-align: center;
       line-height: 1.3;
     }
@@ -149,11 +184,14 @@
     .info-pill {
       background: #e8f5f4;
       color: var(--teal-d);
-      border: 1px solid var(--teal-l);
+      border: 1px solid #00B4C8;
       font-size: 12px;
       font-weight: 700;
       padding: 5px 14px;
       border-radius: 999px;
+    }
+    .info-pill svg [stroke] {
+      stroke: #00B4C8;
     }
 
     /* ─── BUTTONS ─── */
@@ -167,17 +205,19 @@
       cursor: pointer;
       transition: all .22s ease;
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
-      color: white;
-      box-shadow: 0 6px 20px rgba(255,107,107,.38), 0 2px 6px rgba(244,143,185,.25);
+    .btn-primary,
+    .btn.btn-primary {
+      background: #F2B705;
+      color: #1C1C1E;
+      box-shadow: 0 6px 20px rgba(242,183,5,0.35);
       width: 100%;
-      font-size: 16px;
-      padding: 16px;
-      font-weight: 800;
-      letter-spacing: .02em;
+      font-size: 17px;
+      padding: 18px 32px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
-    .btn-primary:hover    { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-1px); box-shadow: 0 8px 26px rgba(255,107,107,.45), 0 3px 8px rgba(244,143,185,.3); }
+    .btn-primary:hover,
+    .btn.btn-primary:hover { background: #F2B705; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(242,183,5,.34); }
     .btn-primary:disabled { opacity: .38; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-ghost {
       background: #f5f5f0;
@@ -390,6 +430,7 @@
     /* detail sections */
     .detail-sec {
       margin-bottom: 20px;
+      border-color: #EDE4D6;
     }
     .detail-head {
       display: flex;
@@ -409,6 +450,9 @@
       font-size: 14px;
       background: var(--teal-xl);
       flex-shrink: 0;
+    }
+    .detail-head .detail-icon circle:first-child {
+      fill: #E0F7F9;
     }
     .detail-title {
       font-size: 12.5px;
@@ -488,6 +532,19 @@
       font-size: 11px;
       font-weight: 900;
       line-height: 1;
+    }
+    .detail-link-btn {
+      display: block;
+      text-align: center;
+      margin: 16px 0;
+      padding: 14px;
+      background: white;
+      border: 2px solid var(--teal);
+      color: var(--teal);
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
     }
 
     /* tags (strengths/weaknesses) */
@@ -661,18 +718,18 @@
       gap: 8px;
       width: 100%;
       padding: 17px 24px;
-      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
-      color: white;
+      background: #F2B705;
+      color: #1C1C1E;
       border-radius: var(--r-s);
       font-family: inherit;
       font-size: 16px;
-      font-weight: 900;
+      font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 6px 22px rgba(255,107,107,.38), 0 2px 8px rgba(244,143,185,.28);
+      box-shadow: 0 6px 18px rgba(242,183,5,.28);
       transition: all .22s;
       letter-spacing: .02em;
     }
-    .cta-btn:hover { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,107,.48), 0 4px 10px rgba(244,143,185,.32); }
+    .cta-btn:hover { background: #F2B705; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(242,183,5,.34); }
     .cta-footnote {
       font-size: 11.5px;
       color: var(--gray-l);
@@ -689,14 +746,17 @@
 
     .retry-row { text-align: center; margin-top: 20px; }
     .btn-retry {
-      background: none; border: none;
+      background: #F2B705; border: none;
       font-family: inherit;
-      font-size: 12px;
-      color: var(--gray);
+      font-size: 15px;
+      color: #1C1C1E;
       cursor: pointer;
-      text-decoration: underline;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: var(--r-s);
+      padding: 12px 18px;
     }
-    .btn-retry:hover { color: var(--teal); }
+    .btn-retry:hover { color: #1C1C1E; }
 
     /* anim */
     .fade-up { animation: fu .42s cubic-bezier(.4,0,.2,1) both; }
@@ -708,14 +768,14 @@
       bottom: 0; left: 0; right: 0;
       z-index: 100;
       padding: 12px 16px 20px;
-      background: linear-gradient(to top, #fdf8f3 70%, transparent);
+      background: linear-gradient(to top, #F9F6F2 70%, transparent);
       display: none;
       justify-content: center;
     }
     .floating-cta-link {
       display: block;
-      background: linear-gradient(135deg, #ff6b6b 0%, #f48fb9 100%);
-      color: white;
+      background: #F2B705;
+      color: #1C1C1E;
       text-decoration: none;
       padding: 16px 24px;
       border-radius: var(--r-s);
@@ -725,53 +785,61 @@
       width: 100%;
       max-width: 548px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(255,107,107,.42);
+      box-shadow: 0 4px 18px rgba(242,183,5,.32);
       transition: all .22s ease;
     }
-    .floating-cta-link:hover { background: linear-gradient(135deg, #e85a4f 0%, #e870a0 100%); transform: translateY(-1px); }
+    .floating-cta-link:hover { background: #F2B705; transform: translateY(-1px); }
 
     @media (max-width: 480px) {
       .card         { padding: 28px 18px; }
       .q-text       { font-size: 16px; }
       .result-type-ja { font-size: 20px; }
-      .char-preview { grid-template-columns: repeat(4, 1fr); gap: 5px; }
-      .char-mini .icon { font-size: 20px; }
+      .char-preview { gap: 5px; }
+      .char-mini { padding: 10px 5px; }
+      .char-mini .icon,
+      .char-mini .icon svg { width: 48px; height: 48px; }
     }
   </style>
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-logo">Azusa English</div>
+  <div class="site-logo">えいごMBTI診断</div>
   <div class="site-tagline">英語タイプ診断 ✦ 無料</div>
 </header>
 
 <!-- ══════════ START ══════════ -->
 <div class="card card-accent fade-up" id="s-start">
-  <span class="hero-emoji"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="#fff9f0"/><rect x="14" y="20" width="52" height="50" rx="10" fill="white" stroke="#f2a246" stroke-width="2.5"/><rect x="30" y="13" width="20" height="12" rx="6" fill="#f2a246"/><rect x="32" y="14" width="16" height="9" rx="4.5" fill="white" opacity=".7"/><circle cx="27" cy="40" r="7.5" fill="#f2a246"/><circle cx="53" cy="40" r="7.5" fill="#4688df"/><circle cx="27" cy="58" r="7.5" fill="#f48fb9"/><circle cx="53" cy="58" r="7.5" fill="#5cc8cf"/></svg></span>
+  <div class="azusa-intro">
+    <img src="azusa-profile.jpg" class="azusa-intro-img" alt="英語コーチ あずさ" />
+    <div class="azusa-intro-text">
+      <div class="azusa-intro-name">英語コーチ・稲冨あずさ</div>
+      <p class="azusa-intro-desc">話せない理由は、タイプによって違います。あなたのタイプを知ることが、最短ルートへの第一歩です。</p>
+    </div>
+  </div>
   <h1>あなたはどの<br><span>英語学習タイプ</span>？</h1>
   <p class="lead">
     頑張っているのに話せない——<br>
-    その理由は4つのタイプに分かれています。<br>
-    15問で、あなたの「英語の壁」を診断します。
+    その理由は、あなたのタイプによって違います。<br>
+    12問で、あなただけの「壁の正体」を見つけましょう。
   </p>
 
   <!-- character preview -->
   <div class="char-preview">
     <div class="char-mini">
-      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff4e4"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f2a246"/><path d="M46,91 L60,103 L74,91" fill="#c87820"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#c87820"/><polygon points="70,87 63,91 70,95" fill="#c87820"/><circle cx="60" cy="91" r="3.2" fill="#e8960a"/><circle cx="60" cy="50" r="32" fill="#e8920a"/><polygon points="60,10 55,26 65,26" fill="#e8920a"/><polygon points="47,13 44,28 55,24" fill="#e8920a"/><polygon points="73,13 76,28 65,24" fill="#e8920a"/><polygon points="35,22 36,37 47,28" fill="#e8920a"/><polygon points="85,22 84,37 73,28" fill="#e8920a"/><circle cx="31" cy="54" r="8" fill="#fce8d4"/><circle cx="89" cy="54" r="8" fill="#fce8d4"/><circle cx="31" cy="54" r="5" fill="#f8c4a0"/><circle cx="89" cy="54" r="5" fill="#f8c4a0"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><path d="M49,54 Q53,50 57,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M63,54 Q67,50 71,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#4a2c10"/><circle cx="67" cy="62" r="5.5" fill="#4a2c10"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M49,76 Q60,86 71,76" stroke="#c87820" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#FFF4E6"/><ellipse cx="60" cy="94" rx="26" ry="18" fill="#F2A246"/><circle cx="60" cy="54" r="28" fill="#FDDCB5"/><circle cx="36" cy="52" r="8" fill="#F2A246"/><circle cx="84" cy="52" r="8" fill="#F2A246"/><polygon points="48,26 55,40 42,40" fill="#E8920A"/><polygon points="60,20 67,40 53,40" fill="#E8920A"/><polygon points="72,26 78,40 65,40" fill="#E8920A"/><circle cx="51" cy="55" r="4.2" fill="#1C1C1E"/><circle cx="69" cy="55" r="4.2" fill="#1C1C1E"/><circle cx="52.5" cy="53.5" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="53.5" r="1.4" fill="#FFFFFF"/><ellipse cx="46" cy="66" rx="6" ry="3.5" fill="#F2A246" opacity="0.4"/><ellipse cx="74" cy="66" rx="6" ry="3.5" fill="#F2A246" opacity="0.4"/><path d="M49 73 Q60 84 71 73" stroke="#1C1C1E" stroke-width="3" fill="none" stroke-linecap="round"/><polygon points="91,72 94,79 102,79 96,84 98,92 91,87 84,92 86,84 80,79 88,79" fill="#F2B705"/></svg></span>
       <span class="name">行動<br>ライオン型</span>
     </div>
     <div class="char-mini">
-      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#eff4ff"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#4688df"/><path d="M46,91 L60,103 L74,91" fill="#1c3870"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#1c3870"/><polygon points="70,87 63,91 70,95" fill="#1c3870"/><circle cx="60" cy="91" r="3.2" fill="#4688df"/><ellipse cx="60" cy="43" rx="30" ry="22" fill="#2a3f6e"/><ellipse cx="32" cy="57" rx="10" ry="14" fill="#2a3f6e"/><ellipse cx="88" cy="57" rx="10" ry="14" fill="#2a3f6e"/><polygon points="45,28 41,11 54,26" fill="#2a3f6e"/><polygon points="75,28 79,11 66,26" fill="#2a3f6e"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><ellipse cx="76" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><path d="M44,52 Q48,48 52,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M68,52 Q72,48 76,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><circle cx="70" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><line x1="61.5" y1="63" x2="58.5" y2="63" stroke="#4688df" stroke-width="2.5"/><line x1="23" y1="60" x2="38.5" y2="61" stroke="#4688df" stroke-width="2.2"/><line x1="81.5" y1="61" x2="97" y2="60" stroke="#4688df" stroke-width="2.2"/><circle cx="50" cy="63" r="4.5" fill="#2a3040"/><circle cx="70" cy="63" r="4.5" fill="#2a3040"/><circle cx="52" cy="61" r="2" fill="white"/><circle cx="72" cy="61" r="2" fill="white"/><circle cx="60" cy="71" r="1.8" fill="#d4987a"/><path d="M52,78 Q60,84 68,78" stroke="#a07850" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#EFF4FF"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#4688DF"/><circle cx="60" cy="55" r="30" fill="#FDDCB5"/><path d="M34 50 A26 24 0 0 1 86 50 L86 58 L34 58 Z" fill="#2A3F6E"/><polygon points="38,36 30,20 50,34" fill="#2A3F6E"/><polygon points="82,36 90,20 70,34" fill="#2A3F6E"/><circle cx="49" cy="58" r="8" fill="none" stroke="#4688DF" stroke-width="3"/><circle cx="71" cy="58" r="8" fill="none" stroke="#4688DF" stroke-width="3"/><line x1="57" y1="58" x2="63" y2="58" stroke="#4688DF" stroke-width="3" stroke-linecap="round"/><circle cx="49" cy="58" r="3.2" fill="#1C1C1E"/><circle cx="71" cy="58" r="3.2" fill="#1C1C1E"/><circle cx="50" cy="57" r="1.1" fill="#FFFFFF"/><circle cx="72" cy="57" r="1.1" fill="#FFFFFF"/><path d="M54 72 Q60 77 66 72" stroke="#1C1C1E" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="47" y="88" width="26" height="16" rx="2" fill="#FFFFFF"/><line x1="60" y1="88" x2="60" y2="104" stroke="#4688DF" stroke-width="2"/><line x1="51" y1="94" x2="57" y2="94" stroke="#4688DF" stroke-width="1.6"/><line x1="63" y1="94" x2="69" y2="94" stroke="#4688DF" stroke-width="1.6"/></svg></span>
       <span class="name">探求<br>フクロウ型</span>
     </div>
     <div class="char-mini">
-      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff0f6"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f48fb9"/><path d="M46,91 L60,103 L74,91" fill="#8c1840"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#d4307a"/><polygon points="70,87 63,91 70,95" fill="#d4307a"/><circle cx="60" cy="91" r="3.2" fill="#f48fb9"/><rect x="24" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><rect x="80" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><ellipse cx="60" cy="43" rx="28" ry="20" fill="#f48fb9"/><ellipse cx="60" cy="56" rx="28" ry="12" fill="#f48fb9"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(0 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(72 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(144 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(216 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(288 83 44)"/><circle cx="83" cy="44" r="4" fill="#f9e070"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="43" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><ellipse cx="77" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><path d="M49,53 Q53,49 57,52" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M63,52 Q67,49 71,53" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="53" cy="62" rx="5.5" ry="5" fill="#2a1820"/><ellipse cx="67" cy="62" rx="5.5" ry="5" fill="#2a1820"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><line x1="48" y1="58" x2="45" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="52" y1="57" x2="51" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="56" y1="57" x2="57" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="62" y1="57" x2="63" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="57" x2="67" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="70" y1="58" x2="73" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M52,77 Q60,84 68,77" stroke="#d4307a" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#FFF0F6"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#F48FB9"/><rect x="27" y="45" width="16" height="50" rx="8" fill="#F48FB9"/><rect x="77" y="45" width="16" height="50" rx="8" fill="#F48FB9"/><circle cx="60" cy="55" r="28" fill="#FDDCB5"/><ellipse cx="51" cy="58" rx="4.2" ry="5.5" fill="#2A1820"/><ellipse cx="69" cy="58" rx="4.2" ry="5.5" fill="#2A1820"/><circle cx="52.5" cy="56" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="56" r="1.4" fill="#FFFFFF"/><line x1="45" y1="51" x2="42" y2="47" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="50" y1="49" x2="49" y2="45" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="55" y1="50" x2="57" y2="46" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="65" y1="50" x2="63" y2="46" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="70" y1="49" x2="71" y2="45" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="75" y1="51" x2="78" y2="47" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="44" cy="68" rx="7" ry="4" fill="#F87090" opacity="0.35"/><ellipse cx="76" cy="68" rx="7" ry="4" fill="#F87090" opacity="0.35"/><path d="M52 74 Q60 80 68 74" stroke="#2A1820" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="88" cy="34" r="4.6" fill="#FCE0EE"/><circle cx="96" cy="39" r="4.6" fill="#FCE0EE"/><circle cx="93" cy="48" r="4.6" fill="#FCE0EE"/><circle cx="83" cy="48" r="4.6" fill="#FCE0EE"/><circle cx="80" cy="39" r="4.6" fill="#FCE0EE"/><circle cx="88" cy="42" r="3" fill="#F2B705"/></svg></span>
       <span class="name">感性<br>さくら型</span>
     </div>
     <div class="char-mini">
-      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#edfafa"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#5cc8cf"/><path d="M46,91 L60,103 L74,91" fill="#145c64"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#145c64"/><polygon points="70,87 63,91 70,95" fill="#145c64"/><circle cx="60" cy="91" r="3.2" fill="#5cc8cf"/><path d="M31,52 C23,63 25,73 27,83 C29,91 31,98 33,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M89,52 C97,63 95,73 93,83 C91,91 89,98 87,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="44" rx="29" ry="21" fill="#5cc8cf"/><path d="M31,50 Q39,34 49,44 Q54,30 60,41 Q66,30 71,44 Q81,34 89,50 Z" fill="#5cc8cf"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-145 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(145 79 36)"/><ellipse cx="79" cy="36" rx="2.5" ry="4" fill="#5cc8cf"/><path d="M77,33 Q74,26 71,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M81,33 Q84,26 87,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="71" cy="23" r="2.2" fill="#80d8de"/><circle cx="87" cy="23" r="2.2" fill="#80d8de"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><path d="M49,53 Q53,49 57,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M63,53 Q67,49 71,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#145c64"/><circle cx="67" cy="62" r="5.5" fill="#145c64"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M51,77 Q60,85 69,77" stroke="#145c64" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="icon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#EDFAFA"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#5CC8CF"/><circle cx="60" cy="55" r="28" fill="#FDDCB5"/><path d="M33 50 Q44 34 54 45 Q60 34 66 45 Q76 34 87 50 L87 58 L33 58 Z" fill="#5CC8CF"/><circle cx="51" cy="58" r="4.2" fill="#145C64"/><circle cx="69" cy="58" r="4.2" fill="#145C64"/><circle cx="52.5" cy="56.5" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="56.5" r="1.4" fill="#FFFFFF"/><ellipse cx="45" cy="68" rx="6" ry="3.5" fill="#80D8DE" opacity="0.4"/><ellipse cx="75" cy="68" rx="6" ry="3.5" fill="#80D8DE" opacity="0.4"/><path d="M49 72 Q60 84 71 72" stroke="#145C64" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="91" cy="35" rx="7" ry="4.5" fill="#80D8DE" transform="rotate(-35 91 35)"/><ellipse cx="101" cy="35" rx="7" ry="4.5" fill="#A0E8EC" transform="rotate(35 101 35)"/><ellipse cx="91" cy="45" rx="7" ry="4.5" fill="#A0E8EC" transform="rotate(35 91 45)"/><ellipse cx="101" cy="45" rx="7" ry="4.5" fill="#80D8DE" transform="rotate(-35 101 45)"/><ellipse cx="96" cy="40" rx="2.5" ry="7" fill="#5CC8CF"/></svg></span>
       <span class="name">挑戦<br>バタフライ型</span>
     </div>
   </div>
@@ -781,7 +849,7 @@
     <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="12" r="9" fill="#e6f7f6" stroke="#0ba298" stroke-width="1.8"/><line x1="11" y1="5" x2="11" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="2" x2="14" y2="2" stroke="#0ba298" stroke-width="1.8" stroke-linecap="round"/><line x1="11" y1="12" x2="11" y2="8" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="12" x2="14.5" y2="12" stroke="#0ba298" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="12" r="1.5" fill="#0ba298"/></svg> 約3分</span>
     <span class="info-pill" style="display:inline-flex;align-items:center;gap:4px;"><svg width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="9" width="20" height="12" rx="3" fill="#edfafa" stroke="#5cc8cf" stroke-width="1.8"/><rect x="1" y="6" width="20" height="4" rx="2" fill="#5cc8cf" opacity=".6" stroke="#5cc8cf" stroke-width="1.5"/><line x1="11" y1="6" x2="11" y2="21" stroke="white" stroke-width="1.8"/><path d="M11,6 C11,4 9,2 7,3 C5,4 6,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/><path d="M11,6 C11,4 13,2 15,3 C17,4 16,6 11,6" stroke="#289aa4" stroke-width="1.4" fill="#a0e4e8" opacity=".8"/></svg> 完全無料</span>
   </div>
-  <button class="btn btn-primary" onclick="startQuiz()">診断スタート →</button>
+  <button class="btn btn-primary" onclick="startQuiz()">無料で診断する →</button>
 </div>
 
 <!-- ══════════ QUIZ ══════════ -->
@@ -852,6 +920,9 @@
       <span class="detail-title">今日からの処方箋</span>
     </div>
     <div id="res-steps"></div>
+    <a class="detail-link-btn" id="detail-link" href="#">
+      あなた専用の詳細ガイドを見る →
+    </a>
   </div>
 
   <!-- PITFALLS -->
@@ -924,7 +995,7 @@ const TYPES = {
 
   lion: {
     badge:      { text:'タイプ A', bg:'#fff7ed', color:'#9a3412', border:'#fed7aa' },
-    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff4e4"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f2a246"/><path d="M46,91 L60,103 L74,91" fill="#c87820"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#c87820"/><polygon points="70,87 63,91 70,95" fill="#c87820"/><circle cx="60" cy="91" r="3.2" fill="#e8960a"/><circle cx="60" cy="50" r="32" fill="#e8920a"/><polygon points="60,10 55,26 65,26" fill="#e8920a"/><polygon points="47,13 44,28 55,24" fill="#e8920a"/><polygon points="73,13 76,28 65,24" fill="#e8920a"/><polygon points="35,22 36,37 47,28" fill="#e8920a"/><polygon points="85,22 84,37 73,28" fill="#e8920a"/><circle cx="31" cy="54" r="8" fill="#fce8d4"/><circle cx="89" cy="54" r="8" fill="#fce8d4"/><circle cx="31" cy="54" r="5" fill="#f8c4a0"/><circle cx="89" cy="54" r="5" fill="#f8c4a0"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#f8b8a0" opacity=".5"/><path d="M49,54 Q53,50 57,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M63,54 Q67,50 71,54" stroke="#c87820" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#4a2c10"/><circle cx="67" cy="62" r="5.5" fill="#4a2c10"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M49,76 Q60,86 71,76" stroke="#c87820" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#FFF4E6"/><ellipse cx="60" cy="94" rx="26" ry="18" fill="#F2A246"/><circle cx="60" cy="54" r="28" fill="#FDDCB5"/><circle cx="36" cy="52" r="8" fill="#F2A246"/><circle cx="84" cy="52" r="8" fill="#F2A246"/><polygon points="48,26 55,40 42,40" fill="#E8920A"/><polygon points="60,20 67,40 53,40" fill="#E8920A"/><polygon points="72,26 78,40 65,40" fill="#E8920A"/><circle cx="51" cy="55" r="4.2" fill="#1C1C1E"/><circle cx="69" cy="55" r="4.2" fill="#1C1C1E"/><circle cx="52.5" cy="53.5" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="53.5" r="1.4" fill="#FFFFFF"/><ellipse cx="46" cy="66" rx="6" ry="3.5" fill="#F2A246" opacity="0.4"/><ellipse cx="74" cy="66" rx="6" ry="3.5" fill="#F2A246" opacity="0.4"/><path d="M49 73 Q60 84 71 73" stroke="#1C1C1E" stroke-width="3" fill="none" stroke-linecap="round"/><polygon points="91,72 94,79 102,79 96,84 98,92 91,87 84,92 86,84 80,79 88,79" fill="#F2B705"/></svg>`,
     en:         'THE ACTION LION',
     ja:         '行動ライオン型',
     desc:       '英語への情熱と行動力は誰にも負けない。\nでも「型」がまだ固まっていないため、その熱量が正しい方向に向かいにくいタイプ。',
@@ -969,7 +1040,7 @@ const TYPES = {
 
   owl: {
     badge:      { text:'タイプ B', bg:'#f0fdf4', color:'#14532d', border:'#86efac' },
-    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#eff4ff"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#4688df"/><path d="M46,91 L60,103 L74,91" fill="#1c3870"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#1c3870"/><polygon points="70,87 63,91 70,95" fill="#1c3870"/><circle cx="60" cy="91" r="3.2" fill="#4688df"/><ellipse cx="60" cy="43" rx="30" ry="22" fill="#2a3f6e"/><ellipse cx="32" cy="57" rx="10" ry="14" fill="#2a3f6e"/><ellipse cx="88" cy="57" rx="10" ry="14" fill="#2a3f6e"/><polygon points="45,28 41,11 54,26" fill="#2a3f6e"/><polygon points="75,28 79,11 66,26" fill="#2a3f6e"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><ellipse cx="76" cy="71" rx="6" ry="4" fill="#f8b8a0" opacity=".35"/><path d="M44,52 Q48,48 52,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M68,52 Q72,48 76,52" stroke="#2a3f6e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><circle cx="70" cy="63" r="11.5" fill="none" stroke="#4688df" stroke-width="2.8"/><line x1="61.5" y1="63" x2="58.5" y2="63" stroke="#4688df" stroke-width="2.5"/><line x1="23" y1="60" x2="38.5" y2="61" stroke="#4688df" stroke-width="2.2"/><line x1="81.5" y1="61" x2="97" y2="60" stroke="#4688df" stroke-width="2.2"/><circle cx="50" cy="63" r="4.5" fill="#2a3040"/><circle cx="70" cy="63" r="4.5" fill="#2a3040"/><circle cx="52" cy="61" r="2" fill="white"/><circle cx="72" cy="61" r="2" fill="white"/><circle cx="60" cy="71" r="1.8" fill="#d4987a"/><path d="M52,78 Q60,84 68,78" stroke="#a07850" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#EFF4FF"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#4688DF"/><circle cx="60" cy="55" r="30" fill="#FDDCB5"/><path d="M34 50 A26 24 0 0 1 86 50 L86 58 L34 58 Z" fill="#2A3F6E"/><polygon points="38,36 30,20 50,34" fill="#2A3F6E"/><polygon points="82,36 90,20 70,34" fill="#2A3F6E"/><circle cx="49" cy="58" r="8" fill="none" stroke="#4688DF" stroke-width="3"/><circle cx="71" cy="58" r="8" fill="none" stroke="#4688DF" stroke-width="3"/><line x1="57" y1="58" x2="63" y2="58" stroke="#4688DF" stroke-width="3" stroke-linecap="round"/><circle cx="49" cy="58" r="3.2" fill="#1C1C1E"/><circle cx="71" cy="58" r="3.2" fill="#1C1C1E"/><circle cx="50" cy="57" r="1.1" fill="#FFFFFF"/><circle cx="72" cy="57" r="1.1" fill="#FFFFFF"/><path d="M54 72 Q60 77 66 72" stroke="#1C1C1E" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="47" y="88" width="26" height="16" rx="2" fill="#FFFFFF"/><line x1="60" y1="88" x2="60" y2="104" stroke="#4688DF" stroke-width="2"/><line x1="51" y1="94" x2="57" y2="94" stroke="#4688DF" stroke-width="1.6"/><line x1="63" y1="94" x2="69" y2="94" stroke="#4688DF" stroke-width="1.6"/></svg>`,
     en:         'THE CURIOUS OWL',
     ja:         '探求フクロウ型',
     desc:       '英語の知識を深く探求してきた、好奇心旺盛なタイプ。\nでも実践の場がほぼゼロで、頭の中の英語がまだ口につながっていない。',
@@ -1014,7 +1085,7 @@ const TYPES = {
 
   sakura: {
     badge:      { text:'タイプ C', bg:'#fff1f2', color:'#9f1239', border:'#fecdd3' },
-    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#fff0f6"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#f48fb9"/><path d="M46,91 L60,103 L74,91" fill="#8c1840"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#d4307a"/><polygon points="70,87 63,91 70,95" fill="#d4307a"/><circle cx="60" cy="91" r="3.2" fill="#f48fb9"/><rect x="24" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><rect x="80" y="54" width="16" height="55" rx="8" fill="#f48fb9"/><ellipse cx="60" cy="43" rx="28" ry="20" fill="#f48fb9"/><ellipse cx="60" cy="56" rx="28" ry="12" fill="#f48fb9"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(0 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(72 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(144 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(216 83 44)"/><ellipse cx="83" cy="35" rx="5" ry="7.5" fill="#fce0ee" transform="rotate(288 83 44)"/><circle cx="83" cy="44" r="4" fill="#f9e070"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="43" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><ellipse cx="77" cy="72" rx="9" ry="5.5" fill="#f87090" opacity=".4"/><path d="M49,53 Q53,49 57,52" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M63,52 Q67,49 71,53" stroke="#d4307a" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="53" cy="62" rx="5.5" ry="5" fill="#2a1820"/><ellipse cx="67" cy="62" rx="5.5" ry="5" fill="#2a1820"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><line x1="48" y1="58" x2="45" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="52" y1="57" x2="51" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="56" y1="57" x2="57" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="62" y1="57" x2="63" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="57" x2="67" y2="53" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><line x1="70" y1="58" x2="73" y2="54" stroke="#2a1820" stroke-width="1.5" stroke-linecap="round"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M52,77 Q60,84 68,77" stroke="#d4307a" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#FFF0F6"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#F48FB9"/><rect x="27" y="45" width="16" height="50" rx="8" fill="#F48FB9"/><rect x="77" y="45" width="16" height="50" rx="8" fill="#F48FB9"/><circle cx="60" cy="55" r="28" fill="#FDDCB5"/><ellipse cx="51" cy="58" rx="4.2" ry="5.5" fill="#2A1820"/><ellipse cx="69" cy="58" rx="4.2" ry="5.5" fill="#2A1820"/><circle cx="52.5" cy="56" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="56" r="1.4" fill="#FFFFFF"/><line x1="45" y1="51" x2="42" y2="47" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="50" y1="49" x2="49" y2="45" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="55" y1="50" x2="57" y2="46" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="65" y1="50" x2="63" y2="46" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="70" y1="49" x2="71" y2="45" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><line x1="75" y1="51" x2="78" y2="47" stroke="#2A1820" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="44" cy="68" rx="7" ry="4" fill="#F87090" opacity="0.35"/><ellipse cx="76" cy="68" rx="7" ry="4" fill="#F87090" opacity="0.35"/><path d="M52 74 Q60 80 68 74" stroke="#2A1820" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="88" cy="34" r="4.6" fill="#FCE0EE"/><circle cx="96" cy="39" r="4.6" fill="#FCE0EE"/><circle cx="93" cy="48" r="4.6" fill="#FCE0EE"/><circle cx="83" cy="48" r="4.6" fill="#FCE0EE"/><circle cx="80" cy="39" r="4.6" fill="#FCE0EE"/><circle cx="88" cy="42" r="3" fill="#F2B705"/></svg>`,
     en:         'THE GIFTED SAKURA',
     ja:         '感性さくら型',
     desc:       '豊かな感性と語学センスを持つ、才能あふれるタイプ。\nでも「完璧に話せないといけない」という思いが行動にブレーキをかけている。',
@@ -1059,7 +1130,7 @@ const TYPES = {
 
   butterfly: {
     badge:      { text:'タイプ D', bg:'#faf5ff', color:'#581c87', border:'#d8b4fe' },
-    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#edfafa"/><path d="M10,120 Q30,96 60,91 Q90,96 110,120 Z" fill="#5cc8cf"/><path d="M46,91 L60,103 L74,91" fill="#145c64"/><rect x="53" y="81" width="14" height="13" rx="6" fill="#fce8d4"/><polygon points="50,87 57,91 50,95" fill="#145c64"/><polygon points="70,87 63,91 70,95" fill="#145c64"/><circle cx="60" cy="91" r="3.2" fill="#5cc8cf"/><path d="M31,52 C23,63 25,73 27,83 C29,91 31,98 33,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M89,52 C97,63 95,73 93,83 C91,91 89,98 87,106" stroke="#5cc8cf" stroke-width="14" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="44" rx="29" ry="21" fill="#5cc8cf"/><path d="M31,50 Q39,34 49,44 Q54,30 60,41 Q66,30 71,44 Q81,34 89,50 Z" fill="#5cc8cf"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(35 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#80d8de" transform="rotate(-145 79 36)"/><ellipse cx="79" cy="36" rx="7" ry="4.5" fill="#a0e8ec" transform="rotate(145 79 36)"/><ellipse cx="79" cy="36" rx="2.5" ry="4" fill="#5cc8cf"/><path d="M77,33 Q74,26 71,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M81,33 Q84,26 87,23" stroke="#5cc8cf" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="71" cy="23" r="2.2" fill="#80d8de"/><circle cx="87" cy="23" r="2.2" fill="#80d8de"/><ellipse cx="60" cy="64" rx="26" ry="28" fill="#fce8d4"/><ellipse cx="44" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><ellipse cx="76" cy="71" rx="7" ry="4.5" fill="#80d8de" opacity=".45"/><path d="M49,53 Q53,49 57,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M63,53 Q67,49 71,53" stroke="#145c64" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="53" cy="62" r="5.5" fill="#145c64"/><circle cx="67" cy="62" r="5.5" fill="#145c64"/><circle cx="55" cy="60" r="2.2" fill="white"/><circle cx="69" cy="60" r="2.2" fill="white"/><circle cx="60" cy="70" r="1.8" fill="#d4987a"/><path d="M51,77 Q60,85 69,77" stroke="#145c64" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+    icon:       `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="58" fill="#EDFAFA"/><rect x="36" y="76" width="48" height="30" rx="14" fill="#5CC8CF"/><circle cx="60" cy="55" r="28" fill="#FDDCB5"/><path d="M33 50 Q44 34 54 45 Q60 34 66 45 Q76 34 87 50 L87 58 L33 58 Z" fill="#5CC8CF"/><circle cx="51" cy="58" r="4.2" fill="#145C64"/><circle cx="69" cy="58" r="4.2" fill="#145C64"/><circle cx="52.5" cy="56.5" r="1.4" fill="#FFFFFF"/><circle cx="70.5" cy="56.5" r="1.4" fill="#FFFFFF"/><ellipse cx="45" cy="68" rx="6" ry="3.5" fill="#80D8DE" opacity="0.4"/><ellipse cx="75" cy="68" rx="6" ry="3.5" fill="#80D8DE" opacity="0.4"/><path d="M49 72 Q60 84 71 72" stroke="#145C64" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="91" cy="35" rx="7" ry="4.5" fill="#80D8DE" transform="rotate(-35 91 35)"/><ellipse cx="101" cy="35" rx="7" ry="4.5" fill="#A0E8EC" transform="rotate(35 101 35)"/><ellipse cx="91" cy="45" rx="7" ry="4.5" fill="#A0E8EC" transform="rotate(35 91 45)"/><ellipse cx="101" cy="45" rx="7" ry="4.5" fill="#80D8DE" transform="rotate(-35 101 45)"/><ellipse cx="96" cy="40" rx="2.5" ry="7" fill="#5CC8CF"/></svg>`,
     en:         'THE RESILIENT BUTTERFLY',
     ja:         '挑戦バタフライ型',
     desc:       '何度チャレンジしても諦めない、強い心を持つタイプ。\nでも継続の「仕組み」がなく、何度も再スタートを繰り返してしまっている。',
@@ -1432,6 +1503,7 @@ function showResult(typeId, sc, result = null) {
       </div>`).join('');
   document.getElementById('res-pitfalls').innerHTML =
     t.pitfalls.map(p => `<li class="pitfall-item">${p}</li>`).join('');
+  document.getElementById('detail-link').href = `${typeId}.html`;
 
   // promises
   document.getElementById('res-promises').innerHTML =
@@ -1446,7 +1518,7 @@ function showResult(typeId, sc, result = null) {
   document.getElementById('floating-cta-link').textContent = t.cta.btn;
 
   // ─── type-color icon tinting ───
-  const _secBg = {lion:'#fff4e4',owl:'#eff4ff',sakura:'#fff0f6',butterfly:'#edfafa'}[typeId];
+  const _secBg = '#E0F7F9';
   document.querySelectorAll('.detail-icon svg circle:first-child, .sec-icon svg circle:first-child').forEach(c => c.setAttribute('fill', _secBg));
   // cta-headline accent color matches type
   const _typeAccent = {lion:'#e8920a',owl:'#4688df',sakura:'#d4307a',butterfly:'#289aa4'}[typeId];
