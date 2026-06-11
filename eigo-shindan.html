@@ -659,9 +659,15 @@
       background: var(--dark);
     }
     .video-body iframe,
-    .video-body video {
+    .video-body video,
+    #yt-player {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    #yt-player iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -694,6 +700,28 @@
       text-align: center;
       line-height: 1.6;
     }
+
+    /* 倍速ボタン */
+    .speed-row {
+      display: flex; gap: 6px; justify-content: center;
+      padding: 10px 12px;
+      background: #1C1C1E;
+      flex-wrap: wrap;
+    }
+    .speed-label {
+      font-size: 11px; color: rgba(255,255,255,.5);
+      display: flex; align-items: center;
+      margin-right: 2px; white-space: nowrap;
+    }
+    .speed-btn {
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 20px; padding: 5px 13px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: background .15s, color .15s;
+    }
+    .speed-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+    .speed-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
 
     /* CTA */
     .cta-card {
@@ -1009,7 +1037,15 @@
       <span class="sec-icon" style="display:inline-flex;align-items:center;gap:6px;vertical-align:middle;"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="13" fill="#eff4ff"/><rect x="3" y="9" width="17" height="11" rx="4" fill="white" stroke="#4688df" stroke-width="2"/><polygon points="20,11 25,14 20,17" fill="#4688df"/><circle cx="11" cy="14" r="4" fill="#4688df" opacity=".15"/><polygon points="9,11.5 9,16.5 15,14" fill="#4688df"/></svg></span> 個別相談って何をするの？あずさより
     </div>
     <div class="video-body">
-      <iframe src="https://www.youtube.com/embed/RiF2m5WtcuU" allowfullscreen></iframe>
+      <div id="yt-player"></div>
+    </div>
+    <div class="speed-row">
+      <span class="speed-label">倍速：</span>
+      <button class="speed-btn" onclick="setSpeed(0.75)">0.75x</button>
+      <button class="speed-btn active" onclick="setSpeed(1)">1x</button>
+      <button class="speed-btn" onclick="setSpeed(1.25)">1.25x</button>
+      <button class="speed-btn" onclick="setSpeed(1.5)">1.5x</button>
+      <button class="speed-btn" onclick="setSpeed(2)">2x</button>
     </div>
   </div>
 
@@ -1650,7 +1686,23 @@ function copyUrl() {
     setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
   });
 }
+
+// ─── YouTube IFrame API ───
+var ytPlayer = null;
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('yt-player', {
+    videoId: 'RiF2m5WtcuU',
+    playerVars: { rel: 0, modestbranding: 1 },
+  });
+}
+function setSpeed(rate) {
+  if (ytPlayer && ytPlayer.setPlaybackRate) ytPlayer.setPlaybackRate(rate);
+  document.querySelectorAll('.speed-btn').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.textContent) === rate);
+  });
+}
 </script>
+<script src="https://www.youtube.com/iframe_api" async></script>
 
 <!-- Floating CTA -->
 <div id="floating-cta">
