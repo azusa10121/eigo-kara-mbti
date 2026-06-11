@@ -680,21 +680,39 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      background: linear-gradient(135deg, #0f2524, #0a3d3a);
+      background: #000;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .video-placeholder img.thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .85;
     }
     .play-btn {
-      width: 60px;
-      height: 60px;
+      position: relative;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: rgba(6,130,160,.35);
-      border: 2px solid rgba(91,200,194,.5);
+      background: rgba(0,0,0,.65);
+      border: 3px solid #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 26px;
       color: white;
+      z-index: 1;
+      transition: transform .18s, background .18s;
+    }
+    .video-placeholder:hover .play-btn {
+      transform: scale(1.1);
+      background: var(--teal);
     }
     .video-placeholder span {
+      position: relative; z-index: 1;
       font-size: 13px;
       color: rgba(255,255,255,.6);
       text-align: center;
@@ -1038,8 +1056,13 @@
     </div>
     <div class="video-body">
       <div id="yt-player"></div>
+      <div class="video-placeholder" id="yt-facade" onclick="loadYtPlayer()">
+        <img class="thumb" src="https://img.youtube.com/vi/RiF2m5WtcuU/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/RiF2m5WtcuU/hqdefault.jpg'" alt="動画サムネイル" />
+        <div class="play-btn">▶</div>
+      </div>
     </div>
-    <div class="speed-row">
+    <div class="speed-row" id="speed-row" style="display:none;">
       <span class="speed-label">倍速：</span>
       <button class="speed-btn" onclick="setSpeed(0.75)">0.75x</button>
       <button class="speed-btn active" onclick="setSpeed(1)">1x</button>
@@ -1689,12 +1712,21 @@ function copyUrl() {
 
 // ─── YouTube IFrame API ───
 var ytPlayer = null;
-function onYouTubeIframeAPIReady() {
-  ytPlayer = new YT.Player('yt-player', {
-    videoId: 'RiF2m5WtcuU',
-    playerVars: { rel: 0, modestbranding: 1 },
-  });
+var ytApiReady = false;
+function onYouTubeIframeAPIReady() { ytApiReady = true; }
+
+function loadYtPlayer() {
+  document.getElementById('yt-facade').style.display = 'none';
+  document.getElementById('speed-row').style.display = 'flex';
+  const init = () => {
+    ytPlayer = new YT.Player('yt-player', {
+      videoId: 'RiF2m5WtcuU',
+      playerVars: { rel: 0, modestbranding: 1, autoplay: 1 },
+    });
+  };
+  ytApiReady ? init() : (window.onYouTubeIframeAPIReady = init);
 }
+
 function setSpeed(rate) {
   if (ytPlayer && ytPlayer.setPlaybackRate) ytPlayer.setPlaybackRate(rate);
   document.querySelectorAll('.speed-btn').forEach(b => {
